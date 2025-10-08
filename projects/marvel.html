@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Universe Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --marvel-red: #ed1d24;
+            --marvel-blue: #0066cc;
+            --marvel-yellow: #ffd700;
+            --marvel-black: #000000;
+            --marvel-white: #ffffff;
+            --marvel-gray: #2c2c2c;
+            --comic-font: 'Comic Sans MS', cursive;
+            --hero-font: 'Impact', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2c;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --border-color: #444444;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --border-color: #dddddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--marvel-red), var(--marvel-blue));
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: var(--hero-font);
+            font-size: 2.5rem;
+            color: var(--marvel-white);
+            text-shadow: 3px 3px 0px var(--marvel-black);
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            color: var(--marvel-white);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--marvel-yellow);
+            color: var(--marvel-black);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .theme-toggle {
+            background: var(--marvel-yellow);
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            min-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(45deg, var(--marvel-red), var(--marvel-blue));
+            color: var(--marvel-white);
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-family: var(--hero-font);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0px var(--marvel-black);
+            animation: heroGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            from { text-shadow: 3px 3px 0px var(--marvel-black), 0 0 20px var(--marvel-yellow); }
+            to { text-shadow: 3px 3px 0px var(--marvel-black), 0 0 40px var(--marvel-yellow); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: var(--marvel-yellow);
+            color: var(--marvel-black);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Character Grid */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .character-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 3px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(237, 29, 36, 0.3);
+            border-color: var(--marvel-red);
+        }
+
+        .character-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--marvel-red), var(--marvel-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--marvel-white);
+            margin-bottom: 1rem;
+        }
+
+        .character-name {
+            font-family: var(--hero-font);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--marvel-red);
+        }
+
+        .character-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .power-level {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--marvel-yellow);
+            color: var(--marvel-black);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem;
+            border: 3px solid var(--marvel-red);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 20px rgba(237, 29, 36, 0.3);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--marvel-red);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            width: 45%;
+            border: 2px solid var(--border-color);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--marvel-red);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -35px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -35px;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 3px solid var(--marvel-red);
+        }
+
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--marvel-red);
+            background: var(--marvel-red);
+            color: var(--marvel-white);
+        }
+
+        .quiz-option.selected {
+            background: var(--marvel-blue);
+            color: var(--marvel-white);
+            border-color: var(--marvel-blue);
+        }
+
+        .quiz-score {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--marvel-red);
+            font-weight: bold;
+        }
+
+        /* Team Builder */
+        .team-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .available-heroes, .selected-team {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 3px solid var(--border-color);
+        }
+
+        .hero-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-item:hover {
+            background: var(--marvel-red);
+            color: var(--marvel-white);
+            transform: translateX(10px);
+        }
+
+        .hero-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        /* Speech Bubble */
+        .speech-bubble {
+            position: relative;
+            background: var(--marvel-yellow);
+            color: var(--marvel-black);
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            font-family: var(--comic-font);
+            font-weight: bold;
+            border: 3px solid var(--marvel-black);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-top-color: var(--marvel-yellow);
+        }
+
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 27px;
+            width: 0;
+            height: 0;
+            border: 18px solid transparent;
+            border-top-color: var(--marvel-black);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, var(--marvel-red), var(--marvel-blue));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--marvel-white);
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .upload-area {
+            border: 3px dashed var(--marvel-red);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-secondary);
+        }
+
+        .upload-area:hover {
+            background: var(--marvel-red);
+            color: var(--marvel-white);
+        }
+
+        /* Forum */
+        .forum-post {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 5px solid var(--marvel-red);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-author {
+            font-weight: bold;
+            color: var(--marvel-red);
+        }
+
+        .post-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 40px);
+                left: 40px !important;
+            }
+
+            .timeline-item::before {
+                left: -35px !important;
+            }
+
+            .team-builder {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--marvel-red);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Easter Egg Styles */
+        .easter-egg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--marvel-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--marvel-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .easter-egg:hover {
+            transform: scale(1.2);
+            background: var(--marvel-yellow);
+            color: var(--marvel-black);
+        }
+
+        .easter-egg.found {
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            80% { transform: translateY(-10px); }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mt-2 { margin-top: 2rem; }
+        .hidden { display: none; }
+        .flex { display: flex; }
+        .justify-center { justify-content: center; }
+        .items-center { align-items: center; }
+        .gap-1 { gap: 1rem; }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">MARVEL HUB</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-section="home">Home</li>
+                    <li class="nav-item" data-section="characters">Characters</li>
+                    <li class="nav-item" data-section="timeline">Timeline</li>
+                    <li class="nav-item" data-section="comics">Comics</li>
+                    <li class="nav-item" data-section="quiz">Quiz</li>
+                    <li class="nav-item" data-section="team-builder">Team Builder</li>
+                    <li class="nav-item" data-section="gallery">Gallery</li>
+                    <li class="nav-item" data-section="forum">Forum</li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero-section">
+                <h1 class="hero-title">WELCOME TO THE MARVEL UNIVERSE</h1>
+                <p class="hero-subtitle">Explore the greatest superheroes, villains, and stories ever told</p>
+                <button class="cta-button" onclick="showSection('characters')">
+                    <i class="fas fa-rocket"></i> Start Your Journey
+                </button>
+            </div>
+            
+            <div class="speech-bubble">
+                <p id="hero-quote">"With great power comes great responsibility." - Spider-Man</p>
+            </div>
+
+            <div class="character-grid">
+                <div class="character-card" onclick="showCharacterDetails('spider-man')">
+                    <div class="power-level">95</div>
+                    <div class="character-image">🕷️</div>
+                    <h3 class="character-name">Spider-Man</h3>
+                    <p class="character-description">Your friendly neighborhood web-slinger with incredible spider powers and an unbreakable moral compass.</p>
+                </div>
+                <div class="character-card" onclick="showCharacterDetails('iron-man')">
+                    <div class="power-level">88</div>
+                    <div class="character-image">🤖</div>
+                    <h3 class="character-name">Iron Man</h3>
+                    <p class="character-description">Genius billionaire philanthropist Tony Stark in his high-tech armor suit.</p>
+                </div>
+                <div class="character-card" onclick="showCharacterDetails('captain-america')">
+                    <div class="power-level">85</div>
+                    <div class="character-image">🛡️</div>
+                    <h3 class="character-name">Captain America</h3>
+                    <p class="character-description">The First Avenger, enhanced super-soldier and symbol of freedom.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Characters Section -->
+        <section id="characters" class="section">
+            <h2 class="text-center mb-2">CHARACTER ENCYCLOPEDIA</h2>
+            
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search for your favorite hero or villain..." id="character-search">
+            </div>
+
+            <div class="character-grid" id="character-grid">
+                <!-- Characters will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="section">
+            <h2 class="text-center mb-2">MARVEL CINEMATIC UNIVERSE TIMELINE</h2>
+            
+            <div class="timeline" id="mcu-timeline">
+                <!-- Timeline items will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Comics Section -->
+        <section id="comics" class="section">
+            <h2 class="text-center mb-2">COMIC COLLECTION DATABASE</h2>
+            
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search comics..." id="comic-search">
+            </div>
+
+            <div class="gallery-grid" id="comic-grid">
+                <!-- Comics will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <h2 class="text-center mb-2">MARVEL TRIVIA CHALLENGE</h2>
+            
+            <div class="quiz-container">
+                <div id="quiz-content">
+                    <div class="quiz-score" id="quiz-score">Score: 0/0</div>
+                    <div class="question" id="quiz-question">Click "Start Quiz" to begin!</div>
+                    <div class="quiz-options" id="quiz-options"></div>
+                    <div class="text-center">
+                        <button class="cta-button" id="quiz-btn" onclick="startQuiz()">Start Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Builder Section -->
+        <section id="team-builder" class="section">
+            <h2 class="text-center mb-2">SUPERHERO TEAM BUILDER</h2>
+            
+            <div class="team-builder">
+                <div class="available-heroes">
+                    <h3>Available Heroes</h3>
+                    <div id="available-heroes-list">
+                        <!-- Heroes will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="selected-team">
+                    <h3>Your Team (Max 6)</h3>
+                    <div id="selected-team-list">
+                        <p class="text-center">Drag heroes here to build your team!</p>
+                    </div>
+                    <div class="text-center mt-2">
+                        <button class="cta-button" onclick="analyzeTeam()">Analyze Team</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section">
+            <h2 class="text-center mb-2">FAN ART GALLERY</h2>
+            
+            <div class="upload-area" onclick="document.getElementById('file-upload').click()">
+                <i class="fas fa-upload" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <p>Click to upload your Marvel fan art!</p>
+                <input type="file" id="file-upload" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+            </div>
+
+            <div class="gallery-grid" id="fan-art-gallery">
+                <!-- Fan art will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Forum Section -->
+        <section id="forum" class="section">
+            <h2 class="text-center mb-2">DISCUSSION FORUM</h2>
+            
+            <div class="forum-post">
+                <div class="post-header">
+                    <span class="post-author">WebSlinger2023</span>
+                    <span class="post-date">2 hours ago</span>
+                </div>
+                <h4>Who would win: Spider-Man vs. Deadpool?</h4>
+                <p>I've been thinking about this matchup. Spider-Man has his spider-sense and web-slinging, but Deadpool has his healing factor and unpredictability. What do you think?</p>
+                <div class="flex gap-1 mt-2">
+                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">👍 42</button>
+                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">💬 Reply</button>
+                </div>
+            </div>
+
+            <div class="forum-post">
+                <div class="post-header">
+                    <span class="post-author">StarkIndustries</span>
+                    <span class="post-date">5 hours ago</span>
+                </div>
+                <h4>MCU Phase 5 Predictions</h4>
+                <p>With the multiverse opening up, I think we're going to see some incredible crossovers. My theory is that we'll get a proper Secret Wars adaptation by 2026.</p>
+                <div class="flex gap-1 mt-2">
+                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">👍 87</button>
+                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">💬 Reply</button>
+                </div>
+            </div>
+
+            <div class="forum-post">
+                <div class="post-header">
+                    <span class="post-author">CosmicReader</span>
+                    <span class="post-date">1 day ago</span>
+                </div>
+                <h4>Best Marvel Comics for Beginners?</h4>
+                <p>New to Marvel comics and feeling overwhelmed. Can anyone recommend some good starting points? I'm particularly interested in X-Men and Avengers storylines.</p>
+                <div class="flex gap-1 mt-2">
+                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">👍 156</button>
+                    <button class="cta-button" style="font-size: 0.9rem; padding: 0.5rem 1rem;">💬 Reply</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Easter Egg -->
+    <div class="easter-egg" onclick="triggerEasterEgg()">
+        <i class="fas fa-gem"></i>
+    </div>
+
+    <script>
+        // Global Variables
+        let currentTheme = 'light';
+        let currentQuizQuestion = 0;
+        let quizScore = 0;
+        let selectedTeam = [];
+        let easterEggsFound = 0;
+
+        // Character Database
+        const characters = [
+            {
+                id: 'spider-man',
+                name: 'Spider-Man',
+                icon: '🕷️',
+                power: 95,
+                description: 'Your friendly neighborhood web-slinger with incredible spider powers.',
+                abilities: ['Web-slinging', 'Spider-sense', 'Wall-crawling', 'Super strength'],
+                firstAppearance: 'Amazing Fantasy #15 (1962)',
+                realName: 'Peter Parker'
+            },
+            {
+                id: 'iron-man',
+                name: 'Iron Man',
+                icon: '🤖',
+                power: 88,
+                description: 'Genius billionaire philanthropist Tony Stark in his high-tech armor.',
+                abilities: ['Powered armor', 'Genius intellect', 'Flight', 'Repulsors'],
+                firstAppearance: 'Tales of Suspense #39 (1963)',
+                realName: 'Tony Stark'
+            },
+            {
+                id: 'captain-america',
+                name: 'Captain America',
+                icon: '���️',
+                power: 85,
+                description: 'The First Avenger, enhanced super-soldier and symbol of freedom.',
+                abilities: ['Super strength', 'Enhanced agility', 'Shield mastery', 'Leadership'],
+                firstAppearance: 'Captain America Comics #1 (1941)',
+                realName: 'Steve Rogers'
+            },
+            {
+                id: 'thor',
+                name: 'Thor',
+                icon: '⚡',
+                power: 98,
+                description: 'Asgardian God of Thunder wielding the mighty hammer Mjolnir.',
+                abilities: ['Lightning control', 'Super strength', 'Flight', 'Mjolnir'],
+                firstAppearance: 'Journey into Mystery #83 (1962)',
+                realName: 'Thor Odinson'
+            },
+            {
+                id: 'hulk',
+                name: 'Hulk',
+                icon: '💚',
+                power: 100,
+                description: 'The incredible green goliath with unlimited strength when angry.',
+                abilities: ['Unlimited strength', 'Regeneration', 'Leaping', 'Durability'],
+                firstAppearance: 'The Incredible Hulk #1 (1962)',
+                realName: 'Bruce Banner'
+            },
+            {
+                id: 'black-widow',
+                name: 'Black Widow',
+                icon: '🕸️',
+                power: 75,
+                description: 'Master spy and assassin with unparalleled combat skills.',
+                abilities: ['Martial arts', 'Espionage', 'Marksmanship', 'Acrobatics'],
+                firstAppearance: 'Tales of Suspense #52 (1964)',
+                realName: 'Natasha Romanoff'
+            },
+            {
+                id: 'doctor-strange',
+                name: 'Doctor Strange',
+                icon: '🔮',
+                power: 92,
+                description: 'Master of the Mystic Arts and Sorcerer Supreme.',
+                abilities: ['Magic', 'Astral projection', 'Time manipulation', 'Teleportation'],
+                firstAppearance: 'Strange Tales #110 (1963)',
+                realName: 'Stephen Strange'
+            },
+            {
+                id: 'wolverine',
+                name: 'Wolverine',
+                icon: '🐺',
+                power: 89,
+                description: 'Mutant with adamantium claws and incredible healing factor.',
+                abilities: ['Healing factor', 'Adamantium claws', 'Enhanced senses', 'Combat skills'],
+                firstAppearance: 'The Incredible Hulk #180 (1974)',
+                realName: 'Logan'
+            }
+        ];
+
+        // MCU Timeline Data
+        const mcuTimeline = [
+            {
+                title: 'Iron Man',
+                year: 2008,
+                description: 'Tony Stark becomes Iron Man and starts the MCU journey.',
+                phase: 'Phase 1'
+            },
+            {
+                title: 'The Incredible Hulk',
+                year: 2008,
+                description: 'Bruce Banner struggles with his alter ego, the Hulk.',
+                phase: 'Phase 1'
+            },
+            {
+                title: 'Iron Man 2',
+                year: 2010,
+                description: 'Tony Stark faces new threats and government pressure.',
+                phase: 'Phase 1'
+            },
+            {
+                title: 'Thor',
+                year: 2011,
+                description: 'The God of Thunder is banished to Earth and learns humility.',
+                phase: 'Phase 1'
+            },
+            {
+                title: 'Captain America: The First Avenger',
+                year: 2011,
+                description: 'Steve Rogers becomes Captain America during World War II.',
+                phase: 'Phase 1'
+            },
+            {
+                title: 'The Avengers',
+                year: 2012,
+                description: 'Earth\'s Mightiest Heroes assemble for the first time.',
+                phase: 'Phase 1'
+            },
+            {
+                title: 'Avengers: Endgame',
+                year: 2019,
+                description: 'The epic conclusion to the Infinity Saga.',
+                phase: 'Phase 3'
+            }
+        ];
+
+        // Quiz Questions
+        const quizQuestions = [
+            {
+                question: "What is Spider-Man's real name?",
+                options: ["Peter Parker", "Peter Pan", "Paul Parker", "Pete Peterson"],
+                correct: 0
+            },
+            {
+                question: "Which Infinity Stone is hidden on Vormir?",
+                options: ["Power Stone", "Time Stone", "Soul Stone", "Reality Stone"],
+                correct: 2
+            },
+            {
+                question: "What is Thor's hammer called?",
+                options: ["Stormbreaker", "Mjolnir", "Gungnir", "Hofund"],
+                correct: 1
+            },
+            {
+                question: "Who founded the X-Men?",
+                options: ["Magneto", "Wolverine", "Professor X", "Cyclops"],
+                correct: 2
+            },
+            {
+                question: "What is Tony Stark's AI assistant called?",
+                options: ["FRIDAY", "KAREN", "JARVIS", "EDITH"],
+                correct: 2
+            }
+        ];
+
+        // Hero Quotes
+        const heroQuotes = [
+            '"With great power comes great responsibility." - Spider-Man',
+            '"I am Iron Man." - Tony Stark',
+            '"I can do this all day." - Captain America',
+            '"I am inevitable." - Thanos',
+            '"Hulk smash!" - Hulk',
+            '"I am Groot." - Groot',
+            '"Wakanda forever!" - Black Panther'
+        ];
+
+        // Comics Database
+        const comics = [
+            { title: 'Amazing Spider-Man #1', year: 1963, cover: '🕷️' },
+            { title: 'X-Men #1', year: 1963, cover: '❌' },
+            { title: 'Fantastic Four #1', year: 1961, cover: '4️⃣' },
+            { title: 'Avengers #1', year: 1963, cover: '🅰️' },
+            { title: 'Iron Man #1', year: 1968, cover: '🤖' },
+            { title: 'Thor #1', year: 1966, cover: '⚡' },
+            { title: 'Captain America #1', year: 1968, cover: '🛡️' },
+            { title: 'Hulk #1', year: 1962, cover: '💚' }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            populateCharacters();
+            populateTimeline();
+            populateComics();
+            populateTeamBuilder();
+            populateGallery();
+            startQuoteRotation();
+            
+            // Add search functionality
+            document.getElementById('character-search').addEventListener('input', filterCharacters);
+            document.getElementById('comic-search').addEventListener('input', filterComics);
+            
+            // Add navigation event listeners
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    showSection(section);
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+
+        function initializeApp() {
+            // Load user preferences from localStorage
+            const savedTheme = localStorage.getItem('marvelTheme') || 'light';
+            const savedTeam = JSON.parse(localStorage.getItem('marvelTeam')) || [];
+            const savedScore = localStorage.getItem('marvelQuizBest') || 0;
+            
+            currentTheme = savedTheme;
+            selectedTeam = savedTeam;
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            updateThemeIcon();
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('marvelTheme', currentTheme);
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const themeIcon = document.querySelector('.theme-toggle i');
+            themeIcon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        function populateCharacters() {
+            const grid = document.getElementById('character-grid');
+            grid.innerHTML = '';
+            
+            characters.forEach(character => {
+                const card = createCharacterCard(character);
+                grid.appendChild(card);
+            });
+        }
+
+        function createCharacterCard(character) {
+            const card = document.createElement('div');
+            card.className = 'character-card';
+            card.onclick = () => showCharacterDetails(character.id);
+            
+            card.innerHTML = `
+                <div class="power-level">${character.power}</div>
+                <div class="character-image">${character.icon}</div>
+                <h3 class="character-name">${character.name}</h3>
+                <p class="character-description">${character.description}</p>
+                <div class="character-abilities" style="margin-top: 1rem;">
+                    <strong>Abilities:</strong> ${character.abilities.join(', ')}
+                </div>
+                <div class="character-info" style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+                    <strong>Real Name:</strong> ${character.realName}<br>
+                    <strong>First Appearance:</strong> ${character.firstAppearance}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function showCharacterDetails(characterId) {
+            const character = characters.find(c => c.id === characterId);
+            if (character) {
+                alert(`${character.name}\n\nReal Name: ${character.realName}\nPower Level: ${character.power}\nAbilities: ${character.abilities.join(', ')}\n\nFirst Appearance: ${character.firstAppearance}\n\n${character.description}`);
+            }
+        }
+
+        function filterCharacters() {
+            const searchTerm = document.getElementById('character-search').value.toLowerCase();
+            const cards = document.querySelectorAll('#character-grid .character-card');
+            
+            cards.forEach(card => {
+                const name = card.querySelector('.character-name').textContent.toLowerCase();
+                const description = card.querySelector('.character-description').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function populateTimeline() {
+            const timeline = document.getElementById('mcu-timeline');
+            timeline.innerHTML = '';
+            
+            mcuTimeline.forEach(item => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                
+                timelineItem.innerHTML = `
+                    <h3>${item.title} (${item.year})</h3>
+                    <p>${item.description}</p>
+                    <span style="color: var(--marvel-red); font-weight: bold;">${item.phase}</span>
+                `;
+                
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        function populateComics() {
+            const grid = document.getElementById('comic-grid');
+            grid.innerHTML = '';
+            
+            comics.forEach(comic => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.onclick = () => showComicDetails(comic);
+                
+                item.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">${comic.cover}</div>
+                        <div style="font-size: 1rem; font-weight: bold;">${comic.title}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">${comic.year}</div>
+                    </div>
+                `;
+                
+                grid.appendChild(item);
+            });
+        }
+
+        function showComicDetails(comic) {
+            alert(`${comic.title}\n\nYear: ${comic.year}\n\nThis is a classic Marvel comic that helped shape the Marvel Universe as we know it today!`);
+        }
+
+        function filterComics() {
+            const searchTerm = document.getElementById('comic-search').value.toLowerCase();
+            const items = document.querySelectorAll('#comic-grid .gallery-item');
+            
+            items.forEach(item => {
+                const title = item.textContent.toLowerCase();
+                
+                if (title.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function startQuiz() {
+            currentQuizQuestion = 0;
+            quizScore = 0;
+            document.getElementById('quiz-btn').textContent = 'Next Question';
+            document.getElementById('quiz-btn').onclick = nextQuestion;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuizQuestion >= quizQuestions.length) {
+                endQuiz();
+                return;
+            }
+            
+            const question = quizQuestions[currentQuizQuestion];
+            document.getElementById('quiz-question').textContent = question.question;
+            document.getElementById('quiz-score').textContent = `Score: ${quizScore}/${currentQuizQuestion}`;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[selectedIndex].classList.add('selected');
+            
+            // Store selected answer
+            window.selectedAnswer = selectedIndex;
+        }
+
+        function nextQuestion() {
+            if (window.selectedAnswer !== undefined) {
+                const question = quizQuestions[currentQuizQuestion];
+                if (window.selectedAnswer === question.correct) {
+                    quizScore++;
+                }
+                
+                currentQuizQuestion++;
+                window.selectedAnswer = undefined;
+                showQuestion();
+            } else {
+                alert('Please select an answer!');
+            }
+        }
+
+        function endQuiz() {
+            const percentage = Math.round((quizScore / quizQuestions.length) * 100);
+            document.getElementById('quiz-question').innerHTML = `
+                <div style="text-align: center;">
+                    <h3>Quiz Complete!</h3>
+                    <p>You scored ${quizScore} out of ${quizQuestions.length} (${percentage}%)</p>
+                    <p>${getQuizMessage(percentage)}</p>
+                </div>
+            `;
+            document.getElementById('quiz-options').innerHTML = '';
+            document.getElementById('quiz-btn').textContent = 'Restart Quiz';
+            document.getElementById('quiz-btn').onclick = startQuiz;
+            
+            // Save best score
+            const bestScore = localStorage.getItem('marvelQuizBest') || 0;
+            if (quizScore > bestScore) {
+                localStorage.setItem('marvelQuizBest', quizScore);
+            }
+        }
+
+        function getQuizMessage(percentage) {
+            if (percentage >= 90) return "🏆 True Marvel Expert! You know your stuff!";
+            if (percentage >= 70) return "⭐ Great job! You're a real Marvel fan!";
+            if (percentage >= 50) return "👍 Not bad! Keep reading those comics!";
+            return "📚 Time to brush up on your Marvel knowledge!";
+        }
+
+        function populateTeamBuilder() {
+            const availableList = document.getElementById('available-heroes-list');
+            availableList.innerHTML = '';
+            
+            characters.forEach(character => {
+                const heroItem = document.createElement('div');
+                heroItem.className = 'hero-item';
+                heroItem.draggable = true;
+                heroItem.onclick = () => addToTeam(character);
+                
+                heroItem.innerHTML = `
+                    <span class="hero-icon">${character.icon}</span>
+                    <div>
+                        <strong>${character.name}</strong>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary);">Power: ${character.power}</div>
+                    </div>
+                `;
+                
+                availableList.appendChild(heroItem);
+            });
+            
+            updateTeamDisplay();
+        }
+
+        function addToTeam(character) {
+            if (selectedTeam.length >= 6) {
+                alert('Maximum team size is 6 heroes!');
+                return;
+            }
+            
+            if (selectedTeam.find(hero => hero.id === character.id)) {
+                alert('This hero is already on your team!');
+                return;
+            }
+            
+            selectedTeam.push(character);
+            updateTeamDisplay();
+            localStorage.setItem('marvelTeam', JSON.stringify(selectedTeam));
+        }
+
+        function removeFromTeam(characterId) {
+            selectedTeam = selectedTeam.filter(hero => hero.id !== characterId);
+            updateTeamDisplay();
+            localStorage.setItem('marvelTeam', JSON.stringify(selectedTeam));
+        }
+
+        function updateTeamDisplay() {
+            const teamList = document.getElementById('selected-team-list');
+            
+            if (selectedTeam.length === 0) {
+                teamList.innerHTML = '<p class="text-center">Drag heroes here to build your team!</p>';
+                return;
+            }
+            
+            teamList.innerHTML = '';
+            selectedTeam.forEach(character => {
+                const heroItem = document.createElement('div');
+                heroItem.className = 'hero-item';
+                heroItem.onclick = () => removeFromTeam(character.id);
+                
+                heroItem.innerHTML = `
+                    <span class="hero-icon">${character.icon}</span>
+                    <div>
+                        <strong>${character.name}</strong>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary);">Power: ${character.power}</div>
+                    </div>
+                    <i class="fas fa-times" style="margin-left: auto; color: var(--marvel-red);"></i>
+                `;
+                
+                teamList.appendChild(heroItem);
+            });
+        }
+
+        function analyzeTeam() {
+            if (selectedTeam.length === 0) {
+                alert('Please select some heroes for your team first!');
+                return;
+            }
+            
+            const totalPower = selectedTeam.reduce((sum, hero) => sum + hero.power, 0);
+            const averagePower = Math.round(totalPower / selectedTeam.length);
+            const teamSize = selectedTeam.length;
+            
+            let analysis = `Team Analysis:\n\n`;
+            analysis += `Team Size: ${teamSize}/6\n`;
+            analysis += `Total Power: ${totalPower}\n`;
+            analysis += `Average Power: ${averagePower}\n\n`;
+            
+            if (averagePower >= 90) {
+                analysis += "🔥 LEGENDARY TEAM! This team could take on cosmic threats!";
+            } else if (averagePower >= 80) {
+                analysis += "⭐ POWERFUL TEAM! Ready for major villains!";
+            } else if (averagePower >= 70) {
+                analysis += "👍 SOLID TEAM! Good for street-level threats!";
+            } else {
+                analysis += "📈 DEVELOPING TEAM! Consider adding stronger heroes!";
+            }
+            
+            alert(analysis);
+        }
+
+        function populateGallery() {
+            const gallery = document.getElementById('fan-art-gallery');
+            
+            // Add some sample fan art placeholders
+            const sampleArt = [
+                { title: 'Spider-Man Swing', artist: 'ArtFan123', icon: '🕷️' },
+                { title: 'Iron Man Portrait', artist: 'TechArtist', icon: '🤖' },
+                { title: 'Avengers Assemble', artist: 'HeroDrawer', icon: '🦸' },
+                { title: 'Thor Lightning', artist: 'MythicArt', icon: '⚡' },
+                { title: 'Captain America Shield', artist: 'PatriotPen', icon: '🛡️' },
+                { title: 'Hulk Smash', artist: 'GreenMachine', icon: '💚' }
+            ];
+            
+            sampleArt.forEach(art => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.onclick = () => showArtDetails(art);
+                
+                item.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">${art.icon}</div>
+                        <div style="font-size: 1rem; font-weight: bold;">${art.title}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">by ${art.artist}</div>
+                    </div>
+                `;
+                
+                gallery.appendChild(item);
+            });
+        }
+
+        function showArtDetails(art) {
+            alert(`${art.title}\nby ${art.artist}\n\nThis is a beautiful piece of Marvel fan art! Thanks for sharing your creativity with the community!`);
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const gallery = document.getElementById('fan-art-gallery');
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.style.backgroundImage = `url(${e.target.result})`;
+                    item.style.backgroundSize = 'cover';
+                    item.style.backgroundPosition = 'center';
+                    
+                    item.innerHTML = `
+                        <div style="background: rgba(0,0,0,0.7); color: white; padding: 1rem; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 1rem; font-weight: bold;">Your Upload</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Just uploaded!</div>
+                        </div>
+                    `;
+                    
+                    gallery.insertBefore(item, gallery.firstChild);
+                };
+                reader.readAsDataURL(file);
+                
+                alert('Thanks for uploading your fan art! 🎨');
+            }
+        }
+
+        function startQuoteRotation() {
+            let currentQuoteIndex = 0;
+            const quoteElement = document.getElementById('hero-quote');
+            
+            setInterval(() => {
+                currentQuoteIndex = (currentQuoteIndex + 1) % heroQuotes.length;
+                quoteElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    quoteElement.textContent = heroQuotes[currentQuoteIndex];
+                    quoteElement.style.opacity = '1';
+                }, 300);
+            }, 5000);
+        }
+
+        function triggerEasterEgg() {
+            easterEggsFound++;
+            const easterEgg = document.querySelector('.easter-egg');
+            easterEgg.classList.add('found');
+            
+            const messages = [
+                "🎉 You found an Easter Egg! Stan Lee would be proud!",
+                "💎 Infinity Stone discovered! You're getting closer to the truth!",
+                "🕷️ With great power comes great responsibility to find more eggs!",
+                "⚡ By Odin's beard! You've found another secret!",
+                "🛡️ I can do this all day... finding Easter eggs!",
+                "🤖 FRIDAY detected an Easter egg! Nice work!",
+                "💚 HULK FOUND EGG! HULK HAPPY!",
+                "🔮 The mystic arts reveal hidden secrets to those who seek!"
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMessage);
+            
+            setTimeout(() => {
+                easterEgg.classList.remove('found');
+            }, 600);
+            
+            // Change the Easter egg icon after finding it
+            const icons = ['💎', '⚡', '🛡️', '🕷️', '🤖', '💚', '🔮', '⭐'];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            easterEgg.innerHTML = `<i class="fas fa-gem"></i>`;
+            
+            // Update localStorage
+            localStorage.setItem('marvelEasterEggs', easterEggsFound);
+        }
+
+        // Add some keyboard shortcuts for power users
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        showSection('home');
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        showSection('characters');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        showSection('timeline');
+                        break;
+                    case 't':
+                        e.preventDefault();
+                        toggleTheme();
+                        break;
+                }
+            }
+        });
+
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Performance optimization: Lazy load images when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all character cards for lazy loading effects
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.character-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

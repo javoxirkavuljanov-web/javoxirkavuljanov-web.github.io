@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Javohir</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">JD</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="./projects/projects.html" class="nav-link">Projects</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contact Hero -->
+    <section class="hero" style="min-height: auto; padding-top: 8rem; padding-bottom: 3rem;">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Let’s connect</h1>
+                <p class="hero-bio" style="max-width: 760px;">I’m open to new opportunities, collaborations, or just a friendly chat.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Methods -->
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-methods">
+                <a href="mailto:javoxirkavuljanov@gmail.com" class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="contact-method">Email</h3>
+                        <p class="contact-detail">javoxirkavuljanov@gmail.com</p>
+                    </div>
+                </a>
+                <a href="https://t.me/justjavoxkavul" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.036 15.804l-.376 5.302c.54 0 .773-.232 1.05-.51l2.525-2.42 5.234 3.84c.96.53 1.645.252 1.906-.89l3.454-16.186.001-.001c.307-1.43-.516-1.986-1.448-1.64L1.43 9.51c-1.393.54-1.372 1.316-.237 1.662l5.313 1.657 12.35-7.79c.58-.353 1.108-.157.673.196L9.036 15.804z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="contact-method">Telegram</h3>
+                        <p class="contact-detail">Message me</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="about" style="padding-top: 3.5rem;">
+        <div class="container" style="max-width: 760px;">
+            <h2 class="section-title">Send a message</h2>
+            <form class="contact-form" action="https://formspree.io/f/your-id" method="POST" style="background: var(--bg-card); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 12px 30px rgba(0,0,0,0.25);">
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label for="name" style="display:block; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight:500;">Name</label>
+                        <input id="name" name="name" type="text" required style="width:100%; padding:0.9rem 1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.08); background:#2f4256; color:var(--text-primary); outline:none; transition:border .2s;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" style="display:block; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight:500;">Email</label>
+                        <input id="email" name="email" type="email" required style="width:100%; padding:0.9rem 1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.08); background:#2f4256; color:var(--text-primary); outline:none; transition:border .2s;" />
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:1rem;">
+                    <label for="message" style="display:block; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight:500;">Message</label>
+                    <textarea id="message" name="message" rows="6" required style="width:100%; padding:0.9rem 1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.08); background:#2f4256; color:var(--text-primary); outline:none; resize:vertical; transition:border .2s;"></textarea>
+                </div>
+                <div class="hero-buttons" style="justify-content:flex-end; margin-top:1rem;">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links" style="justify-content:center; margin-bottom: 1rem;">
+                <a href="https://github.com/javoxirkavuljanov-web" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="https://t.me/justjavoxkavul" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Telegram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.036 15.804l-.376 5.302c.54 0 .773-.232 1.05-.51l2.525-2.42 5.234 3.84c.96.53 1.645.252 1.906-.89l3.454-16.186.001-.001c.307-1.43-.516-1.986-1.448-1.64L1.43 9.51c-1.393.54-1.372 1.316-.237 1.662l5.313 1.657 12.35-7.79c.58-.353 1.108-.157.673.196L9.036 15.804z" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+            <p>&copy; 2025 Javohir. Built with care.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

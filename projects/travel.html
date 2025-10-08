@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Adventures - Discover the World</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #0ea5e9;
+            --primary-green: #059669;
+            --secondary-green: #10b981;
+            --primary-orange: #ea580c;
+            --secondary-orange: #f97316;
+            --accent-teal: #0d9488;
+            --dark-slate: #1e293b;
+            --light-gray: #f8fafc;
+            --white: #ffffff;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            --gradient-secondary: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            --gradient-accent: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-slate);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-slate);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23059669" width="1200" height="800"/><circle fill="%232563eb" opacity="0.3" cx="200" cy="200" r="100"/><circle fill="%23ea580c" opacity="0.3" cx="800" cy="150" r="80"/><circle fill="%230ea5e9" opacity="0.3" cx="1000" cy="400" r="120"/><circle fill="%23f97316" opacity="0.3" cx="300" cy="600" r="90"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 4rem 0;
+            background: var(--light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .search-container {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .suggestion-item:hover {
+            background: var(--light-gray);
+        }
+
+        /* Destinations Grid */
+        .destinations {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .destination-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-image {
+            height: 250px;
+            background: var(--gradient-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(37, 99, 235, 0.8), rgba(14, 165, 233, 0.6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .destination-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--dark-slate);
+        }
+
+        .card-location {
+            color: #64748b;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .star {
+            width: 16px;
+            height: 16px;
+            background: #fbbf24;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .star.empty {
+            background: #e5e7eb;
+        }
+
+        /* Interactive Map */
+        .map-section {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+
+        .map-container {
+            height: 500px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-map {
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500"><rect fill="%230ea5e9" width="1000" height="500"/><path fill="%2310b981" d="M100,100 Q200,50 300,100 L350,150 Q300,200 250,180 L150,200 Q80,150 100,100 Z"/><path fill="%2310b981" d="M400,80 Q500,60 600,90 L650,140 Q580,180 520,160 L450,180 Q380,130 400,80 Z"/><path fill="%2310b981" d="M700,120 Q800,100 900,130 L920,180 Q850,220 790,200 L720,210 Q680,160 700,120 Z"/><path fill="%2310b981" d="M150,250 Q250,230 350,260 L380,310 Q320,350 270,330 L200,350 Q130,300 150,250 Z"/><path fill="%2310b981" d="M500,240 Q600,220 700,250 L720,300 Q660,340 610,320 L540,340 Q470,290 500,240 Z"/><path fill="%2310b981" d="M200,380 Q300,360 400,390 L420,440 Q360,480 320,460 L250,480 Q180,430 200,380 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-orange);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .map-pin::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .map-pin:hover {
+            transform: rotate(-45deg) scale(1.2);
+        }
+
+        .map-tooltip {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark-slate);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .map-pin:hover .map-tooltip {
+            opacity: 1;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 6rem 0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .tool-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--dark-slate);
+        }
+
+        .weather-widget {
+            background: var(--gradient-secondary);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .weather-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .temperature {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .currency-converter {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .currency-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+        }
+
+        /* Itinerary Planner */
+        .itinerary-section {
+            padding: 6rem 0;
+            background: var(--light-gray);
+        }
+
+        .itinerary-planner {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .itinerary-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 2rem;
+        }
+
+        .itinerary-content {
+            padding: 2rem;
+        }
+
+        .day-column {
+            background: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            min-height: 200px;
+        }
+
+        .activity-item {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: move;
+            transition: var(--transition);
+        }
+
+        .activity-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .activity-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        /* Photo Gallery */
+        .gallery-section {
+            padding: 6rem 0;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .photo-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-blue);
+            background: transparent;
+            color: var(--primary-blue);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            margin: 2rem;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--dark-slate);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-slate);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: var(--secondary-blue);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .search-container {
+                grid-template-columns: 1fr;
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .currency-converter {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mt-4 { margin-top: 1rem; }
+        .hidden { display: none; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">🌍 Wanderlust Adventures</div>
+            <ul class="nav-links">
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#itinerary">Planner</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Next Adventure</h1>
+            <p>Explore breathtaking destinations, plan perfect itineraries, and create memories that last a lifetime.</p>
+            <div class="cta-buttons">
+                <a href="#destinations" class="btn btn-primary">🗺️ Explore Destinations</a>
+                <a href="#tools" class="btn btn-secondary">🛠️ Travel Tools</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div style="position: relative;">
+                    <input type="text" class="search-input" placeholder="Search destinations, activities, or experiences..." id="searchInput">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <select class="search-input" id="budgetFilter">
+                    <option value="">Any Budget</option>
+                    <option value="budget">Budget ($0-$50/day)</option>
+                    <option value="mid">Mid-range ($50-$150/day)</option>
+                    <option value="luxury">Luxury ($150+/day)</option>
+                </select>
+                <button class="btn btn-primary" onclick="performSearch()">🔍 Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="destinations" id="destinations">
+        <div class="container">
+            <h2 class="section-title">Featured Destinations</h2>
+            <div class="destinations-grid" id="destinationsGrid">
+                <!-- Destination cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="map-section" id="map">
+        <div class="container">
+            <h2 class="section-title">Explore the World</h2>
+            <div class="map-container">
+                <div class="world-map" id="worldMap">
+                    <!-- Map pins will be added by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Tools Section -->
+    <section class="tools-section" id="tools">
+        <div class="container">
+            <h2 class="section-title">Travel Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🌤️</div>
+                    <h3 class="tool-title">Weather Forecast</h3>
+                    <p>Check current conditions and forecasts for your destinations.</p>
+                    <div class="weather-widget">
+                        <div class="weather-info">
+                            <div>
+                                <div class="temperature" id="temperature">24°C</div>
+                                <div id="weatherCondition">Sunny</div>
+                            </div>
+                            <div style="font-size: 2rem;">☀️</div>
+                        </div>
+                        <button class="btn btn-secondary mt-4" onclick="updateWeather()">Update Weather</button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">💱</div>
+                    <h3 class="tool-title">Currency Converter</h3>
+                    <p>Convert currencies and plan your budget effectively.</p>
+                    <div class="currency-converter">
+                        <input type="number" class="currency-input" placeholder="Amount" id="currencyAmount" value="100">
+                        <select class="currency-input" id="fromCurrency">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="CAD">CAD</option>
+                        </select>
+                        <select class="currency-input" id="toCurrency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="CAD">CAD</option>
+                        </select>
+                    </div>
+                    <div class="mt-4" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-blue);" id="conversionResult">
+                        100 USD = 85 EUR
+                    </div>
+                    <button class="btn btn-secondary mt-4" onclick="convertCurrency()">Convert</button>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📅</div>
+                    <h3 class="tool-title">Trip Planner</h3>
+                    <p>Organize your perfect itinerary with our drag-and-drop planner.</p>
+                    <button class="btn btn-primary" onclick="openItineraryPlanner()">Start Planning</button>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">💡</div>
+                    <h3 class="tool-title">Travel Tips</h3>
+                    <p>Expert advice and local insights for your destination.</p>
+                    <button class="btn btn-primary" onclick="showTravelTips()">Get Tips</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itinerary Planner Section -->
+    <section class="itinerary-section" id="itinerary">
+        <div class="container">
+            <h2 class="section-title">Trip Planner</h2>
+            <div class="itinerary-planner">
+                <div class="itinerary-header">
+                    <h3>My Trip to Paris</h3>
+                    <p>March 15-20, 2024 • 5 Days</p>
+                </div>
+                <div class="itinerary-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div class="day-column" data-day="1">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-blue);">Day 1 - Arrival</h4>
+                            <div class="activity-item" draggable="true">
+                                <strong>🛬 Airport Arrival</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">9:00 AM</div>
+                            </div>
+                            <div class="activity-item" draggable="true">
+                                <strong>🏨 Hotel Check-in</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">3:00 PM</div>
+                            </div>
+                            <div class="activity-item" draggable="true">
+                                <strong>🗼 Eiffel Tower Visit</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">6:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="day-column" data-day="2">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-blue);">Day 2 - Culture</h4>
+                            <div class="activity-item" draggable="true">
+                                <strong>🎨 Louvre Museum</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">10:00 AM</div>
+                            </div>
+                            <div class="activity-item" draggable="true">
+                                <strong>🥐 Seine River Cruise</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">2:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="day-column" data-day="3">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-blue);">Day 3 - Exploration</h4>
+                            <div class="activity-item" draggable="true">
+                                <strong>⛪ Notre-Dame</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">11:00 AM</div>
+                            </div>
+                        </div>
+                        <div class="day-column" data-day="available">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-green);">Available Activities</h4>
+                            <div class="activity-item" draggable="true">
+                                <strong>🛍️ Champs-Élysées Shopping</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">Flexible</div>
+                            </div>
+                            <div class="activity-item" draggable="true">
+                                <strong>🍷 Wine Tasting</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">Evening</div>
+                            </div>
+                            <div class="activity-item" draggable="true">
+                                <strong>🎭 Moulin Rouge Show</strong>
+                                <div style="font-size: 0.9rem; color: #64748b;">8:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Travel Gallery</h2>
+            <div class="photo-filters">
+                <button class="filter-btn active" onclick="filterGallery('all')">All</button>
+                <button class="filter-btn" onclick="filterGallery('mountains')">Mountains</button>
+                <button class="filter-btn" onclick="filterGallery('beaches')">Beaches</button>
+                <button class="filter-btn" onclick="filterGallery('cities')">Cities</button>
+                <button class="filter-btn" onclick="filterGallery('culture')">Culture</button>
+            </div>
+            <div class="photo-gallery" id="photoGallery">
+                <!-- Gallery items will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Wanderlust Adventures</h3>
+                    <p>Your gateway to extraordinary travel experiences around the globe.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">💼</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Destinations</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#">Europe</a></li>
+                        <li><a href="#">Asia</a></li>
+                        <li><a href="#">Americas</a></li>
+                        <li><a href="#">Africa</a></li>
+                        <li><a href="#">Oceania</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#">Flight Booking</a></li>
+                        <li><a href="#">Hotel Reservations</a></li>
+                        <li><a href="#">Tour Packages</a></li>
+                        <li><a href="#">Travel Insurance</a></li>
+                        <li><a href="#">Visa Assistance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Travel Blog</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; padding-top: 2rem; border-top: 1px solid #374151; color: #94a3b8;">
+                <p>&copy; 2024 Wanderlust Adventures. All rights reserved. | Made with ❤️ for travelers</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div class="modal" id="destinationModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('destinationModal')">&times;</button>
+            <div id="modalContent">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img class="lightbox-image" id="lightboxImage" alt="Gallery Image">
+    </div>
+
+    <script>
+        // Global variables
+        let destinations = [];
+        let currentFilter = 'all';
+        let draggedElement = null;
+
+        // Sample data
+        const destinationsData = [
+            {
+                id: 1,
+                name: "Santorini",
+                location: "Greece",
+                price: "$299",
+                rating: 4.8,
+                reviews: 234,
+                image: "img/shutterstock2461128855.avif",
+                description: "Experience breathtaking sunsets and pristine beaches in this iconic Greek island paradise.",
+                highlights: ["Blue-domed churches", "Volcanic beaches", "Wine tasting", "Sunset views"],
+                bestTime: "April - October",
+                budget: "mid",
+                category: "beaches"
+            },
+            {
+                id: 2,
+                name: "Tokyo",
+                location: "Japan",
+                price: "$450",
+                rating: 4.9,
+                reviews: 567,
+                image: "tokyo",
+                description: "Immerse yourself in the perfect blend of ancient traditions and cutting-edge technology.",
+                highlights: ["Cherry blossoms", "Temples & shrines", "Street food", "Modern architecture"],
+                bestTime: "March - May, September - November",
+                budget: "luxury",
+                category: "cities"
+            },
+            {
+                id: 3,
+                name: "Banff National Park",
+                location: "Canada",
+                price: "$180",
+                rating: 4.7,
+                reviews: 189,
+                image: "banff",
+                description: "Discover pristine wilderness, turquoise lakes, and majestic mountain peaks.",
+                highlights: ["Lake Louise", "Hiking trails", "Wildlife viewing", "Mountain scenery"],
+                bestTime: "June - September",
+                budget: "mid",
+                category: "mountains"
+            },
+            {
+                id: 4,
+                name: "Machu Picchu",
+                location: "Peru",
+                price: "$320",
+                rating: 4.9,
+                reviews: 423,
+                image: "machu-picchu",
+                description: "Explore the mystical ancient Inca citadel high in the Andes mountains.",
+                highlights: ["Inca ruins", "Mountain hiking", "Cultural heritage", "Sacred valley"],
+                bestTime: "May - September",
+                budget: "mid",
+                category: "culture"
+            },
+            {
+                id: 5,
+                name: "Maldives",
+                location: "Indian Ocean",
+                price: "$750",
+                rating: 4.8,
+                reviews: 156,
+                image: "maldives",
+                description: "Indulge in luxury overwater bungalows and crystal-clear tropical waters.",
+                highlights: ["Overwater villas", "Coral reefs", "Water sports", "Spa treatments"],
+                bestTime: "November - April",
+                budget: "luxury",
+                category: "beaches"
+            },
+            {
+                id: 6,
+                name: "Swiss Alps",
+                location: "Switzerland",
+                price: "$420",
+                rating: 4.6,
+                reviews: 298,
+                image: "swiss-alps",
+                description: "Experience world-class skiing and hiking in breathtaking alpine scenery.",
+                highlights: ["Skiing & snowboarding", "Mountain railways", "Alpine villages", "Hiking trails"],
+                bestTime: "December - March, June - September",
+                budget: "luxury",
+                category: "mountains"
+            }
+        ];
+
+        const galleryData = [
+            { id: 1, category: 'mountains', title: 'Alpine Sunrise', filter: 'sepia' },
+            { id: 2, category: 'beaches', title: 'Tropical Paradise', filter: 'saturate' },
+            { id: 3, category: 'cities', title: 'Urban Skyline', filter: 'contrast' },
+            { id: 4, category: 'culture', title: 'Ancient Temple', filter: 'vintage' },
+            { id: 5, category: 'mountains', title: 'Misty Peaks', filter: 'blur' },
+            { id: 6, category: 'beaches', title: 'Crystal Waters', filter: 'bright' },
+            { id: 7, category: 'cities', title: 'Night Lights', filter: 'dark' },
+            { id: 8, category: 'culture', title: 'Traditional Market', filter: 'warm' }
+        ];
+
+        const mapLocations = [
+            { name: 'Santorini', x: '55%', y: '45%' },
+            { name: 'Tokyo', x: '85%', y: '35%' },
+            { name: 'Banff', x: '20%', y: '25%' },
+            { name: 'Machu Picchu', x: '30%', y: '70%' },
+            { name: 'Maldives', x: '70%', y: '60%' },
+            { name: 'Swiss Alps', x: '50%', y: '40%' }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            destinations = destinationsData;
+            renderDestinations(destinations);
+            renderGallery(galleryData);
+            renderMapPins();
+            setupEventListeners();
+            setupDragAndDrop();
+            animateOnScroll();
+        }
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Render destinations
+        function renderDestinations(destinationsToRender) {
+            const grid = document.getElementById('destinationsGrid');
+            grid.innerHTML = '';
+
+            destinationsToRender.forEach(destination => {
+                const card = createDestinationCard(destination);
+                grid.appendChild(card);
+            });
+        }
+
+        function createDestinationCard(destination) {
+            const card = document.createElement('div');
+            card.className = 'destination-card';
+            card.onclick = () => openDestinationModal(destination);
+
+            const starsHtml = Array.from({length: 5}, (_, i) => 
+                `<div class="star ${i < Math.floor(destination.rating) ? '' : 'empty'}"></div>`
+            ).join('');
+
+            card.innerHTML = `
+                <div class="card-image">
+                    <div class="card-overlay">View Details</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${destination.name}</h3>
+                    <div class="card-location">📍 ${destination.location}</div>
+                    <div class="card-price">From ${destination.price}/night</div>
+                    <div class="rating">
+                        <div class="stars">${starsHtml}</div>
+                        <span>${destination.rating} (${destination.reviews} reviews)</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="event.stopPropagation(); bookDestination(${destination.id})">
+                        ✈️ Book Now
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Search functionality
+        function setupEventListeners() {
+            const searchInput = document.getElementById('searchInput');
+            const suggestions = document.getElementById('searchSuggestions');
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                if (query.length > 0) {
+                    const filtered = destinations.filter(dest => 
+                        dest.name.toLowerCase().includes(query) ||
+                        dest.location.toLowerCase().includes(query)
+                    );
+                    showSuggestions(filtered);
+                } else {
+                    hideSuggestions();
+                }
+            });
+
+            searchInput.addEventListener('blur', function() {
+                setTimeout(hideSuggestions, 200);
+            });
+        }
+
+        function showSuggestions(destinations) {
+            const suggestions = document.getElementById('searchSuggestions');
+            suggestions.innerHTML = '';
+            
+            destinations.slice(0, 5).forEach(dest => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.textContent = `${dest.name}, ${dest.location}`;
+                item.onclick = () => selectSuggestion(dest);
+                suggestions.appendChild(item);
+            });
+
+            suggestions.style.display = 'block';
+        }
+
+        function hideSuggestions() {
+            document.getElementById('searchSuggestions').style.display = 'none';
+        }
+
+        function selectSuggestion(destination) {
+            document.getElementById('searchInput').value = `${destination.name}, ${destination.location}`;
+            hideSuggestions();
+            scrollToDestination(destination.id);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const budget = document.getElementById('budgetFilter').value;
+            
+            let filtered = destinations;
+
+            if (query) {
+                filtered = filtered.filter(dest => 
+                    dest.name.toLowerCase().includes(query) ||
+                    dest.location.toLowerCase().includes(query) ||
+                    dest.description.toLowerCase().includes(query)
+                );
+            }
+
+            if (budget) {
+                filtered = filtered.filter(dest => dest.budget === budget);
+            }
+
+            renderDestinations(filtered);
+            document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Map functionality
+        function renderMapPins() {
+            const map = document.getElementById('worldMap');
+            
+            mapLocations.forEach(location => {
+                const pin = document.createElement('div');
+                pin.className = 'map-pin';
+                pin.style.left = location.x;
+                pin.style.top = location.y;
+                
+                const tooltip = document.createElement('div');
+                tooltip.className = 'map-tooltip';
+                tooltip.textContent = location.name;
+                pin.appendChild(tooltip);
+                
+                pin.onclick = () => {
+                    const destination = destinations.find(d => d.name === location.name);
+                    if (destination) {
+                        openDestinationModal(destination);
+                    }
+                };
+                
+                map.appendChild(pin);
+            });
+        }
+
+        // Modal functionality
+        function openDestinationModal(destination) {
+            const modal = document.getElementById('destinationModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <h2>${destination.name}</h2>
+                <p style="color: #64748b; margin-bottom: 1rem;">📍 ${destination.location}</p>
+                <div style="height: 200px; background: var(--gradient-primary); border-radius: var(--border-radius); margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">
+                    ${destination.name} View
+                </div>
+                <p style="margin-bottom: 1rem;">${destination.description}</p>
+                <div style="margin-bottom: 1rem;">
+                    <h4>Highlights:</h4>
+                    <ul style="margin-left: 1rem;">
+                        ${destination.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <strong>Best Time:</strong><br>
+                        ${destination.bestTime}
+                    </div>
+                    <div>
+                        <strong>Price:</strong><br>
+                        ${destination.price}/night
+                    </div>
+                    <div>
+                        <strong>Rating:</strong><br>
+                        ⭐ ${destination.rating}/5
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="bookDestination(${destination.id})">✈️ Book Now</button>
+                    <button class="btn btn-secondary" onclick="addToItinerary(${destination.id})">📅 Add to Itinerary</button>
+                    <button class="btn btn-secondary" onclick="shareDestination(${destination.id})">🔗 Share</button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Gallery functionality
+        function renderGallery(items) {
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.dataset.category = item.category;
+                galleryItem.onclick = () => openLightbox(index, items);
+
+                const filters = {
+                    sepia: 'sepia(0.8) contrast(1.2)',
+                    saturate: 'saturate(1.5) brightness(1.1)',
+                    contrast: 'contrast(1.3) brightness(0.9)',
+                    vintage: 'sepia(0.3) contrast(1.1) brightness(1.1)',
+                    blur: 'blur(1px) brightness(1.1)',
+                    bright: 'brightness(1.3) saturate(1.2)',
+                    dark: 'brightness(0.7) contrast(1.2)',
+                    warm: 'sepia(0.2) saturate(1.1) brightness(1.05)'
+                };
+
+                galleryItem.innerHTML = `
+                    <div class="gallery-image" style="filter: ${filters[item.filter] || 'none'}">
+                        ${item.title}
+                    </div>
+                `;
+
+                gallery.appendChild(galleryItem);
+            });
+        }
+
+        function filterGallery(category) {
+            currentFilter = category;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter gallery items
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openLightbox(index, items) {
+            const lightbox = document.getElementById('lightbox');
+            const image = document.getElementById('lightboxImage');
+            
+            // Create a placeholder image representation
+            image.src = 'data:image/svg+xml;base64,' + btoa(`
+                <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+                    <rect width="800" height="600" fill="#2563eb"/>
+                    <text x="400" y="300" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="24" font-family="Arial">
+                        ${items[index].title}
+                    </text>
+                </svg>
+            `);
+            
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Weather functionality
+        function updateWeather() {
+            const temperatures = [18, 22, 25, 28, 31, 24, 19];
+            const conditions = ['Sunny', 'Partly Cloudy', 'Cloudy', 'Rainy', 'Stormy', 'Clear', 'Foggy'];
+            const icons = ['☀️', '⛅', '☁️', '🌧️', '⛈️', '🌟', '🌫️'];
+            
+            const randomIndex = Math.floor(Math.random() * temperatures.length);
+            
+            document.getElementById('temperature').textContent = `${temperatures[randomIndex]}°C`;
+            document.getElementById('weatherCondition').textContent = conditions[randomIndex];
+            
+            // Add loading animation
+            const button = event.target;
+            const originalText = button.textContent;
+            button.innerHTML = '<div class="loading"></div>';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 1000);
+        }
+
+        // Currency conversion
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('currencyAmount').value) || 0;
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+            
+            // Mock exchange rates
+            const rates = {
+                USD: { EUR: 0.85, GBP: 0.73, JPY: 110, CAD: 1.25 },
+                EUR: { USD: 1.18, GBP: 0.86, JPY: 129, CAD: 1.47 },
+                GBP: { USD: 1.37, EUR: 1.16, JPY: 150, CAD: 1.71 },
+                JPY: { USD: 0.009, EUR: 0.0077, GBP: 0.0067, CAD: 0.011 },
+                CAD: { USD: 0.80, EUR: 0.68, GBP: 0.58, JPY: 88 }
+            };
+            
+            let convertedAmount = amount;
+            if (from !== to && rates[from] && rates[from][to]) {
+                convertedAmount = amount * rates[from][to];
+            }
+            
+            document.getElementById('conversionResult').textContent = 
+                `${amount} ${from} = ${convertedAmount.toFixed(2)} ${to}`;
+        }
+
+        // Drag and drop functionality for itinerary
+        function setupDragAndDrop() {
+            const activityItems = document.querySelectorAll('.activity-item');
+            const dayColumns = document.querySelectorAll('.day-column');
+
+            activityItems.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+            });
+
+            dayColumns.forEach(column => {
+                column.addEventListener('dragover', handleDragOver);
+                column.addEventListener('drop', handleDrop);
+                column.addEventListener('dragenter', handleDragEnter);
+                column.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            draggedElement = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDragEnter(e) {
+            this.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
+        }
+
+        function handleDragLeave(e) {
+            this.style.backgroundColor = '';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.style.backgroundColor = '';
+            
+            if (draggedElement && draggedElement !== this) {
+                this.appendChild(draggedElement);
+            }
+        }
+
+        // Utility functions
+        function bookDestination(id) {
+            const destination = destinations.find(d => d.id === id);
+            alert(`🎉 Booking ${destination.name}! Redirecting to booking page...`);
+            closeModal('destinationModal');
+        }
+
+        function addToItinerary(id) {
+            const destination = destinations.find(d => d.id === id);
+            alert(`📅 ${destination.name} added to your itinerary!`);
+        }
+
+        function shareDestination(id) {
+            const destination = destinations.find(d => d.id === id);
+            if (navigator.share) {
+                navigator.share({
+                    title: `Visit ${destination.name}`,
+                    text: destination.description,
+                    url: window.location.href
+                });
+            } else {
+                alert('📋 Link copied to clipboard!');
+            }
+        }
+
+        function openItineraryPlanner() {
+            document.getElementById('itinerary').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTravelTips() {
+            const tips = [
+                "🎒 Pack light and bring versatile clothing",
+                "💳 Notify your bank before traveling abroad",
+                "📱 Download offline maps for your destination",
+                "🏥 Get travel insurance and necessary vaccinations",
+                "💰 Keep copies of important documents",
+                "🌐 Learn basic phrases in the local language",
+                "📷 Respect local customs and photography rules",
+                "🍽️ Try local cuisine but stay hydrated"
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            alert(`💡 Travel Tip: ${randomTip}`);
+        }
+
+        function scrollToDestination(id) {
+            const destination = destinations.find(d => d.id === id);
+            if (destination) {
+                document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe all destination cards
+            document.querySelectorAll('.destination-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Observe gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                observer.observe(item);
+            });
+
+            // Observe tool cards
+            document.querySelectorAll('.tool-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Progressive loading simulation
+        function simulateProgressiveLoading() {
+            const cards = document.querySelectorAll('.destination-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease-out';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        }
+
+        // Geolocation functionality
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        // Mock weather based on location
+                        updateWeatherForLocation(lat, lon);
+                    },
+                    (error) => {
+                        console.log('Location access denied or unavailable');
+                    }
+                );
+            }
+        }
+
+        function updateWeatherForLocation(lat, lon) {
+            // Simulate weather API call
+            const mockWeatherData = {
+                temperature: Math.round(Math.random() * 30 + 5),
+                condition: ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'][Math.floor(Math.random() * 4)],
+                icon: ['☀️', '☁️', '🌧️', '⛅'][Math.floor(Math.random() * 4)]
+            };
+            
+            document.getElementById('temperature').textContent = `${mockWeatherData.temperature}°C`;
+            document.getElementById('weatherCondition').textContent = mockWeatherData.condition;
+        }
+
+        // Auto-update currency rates (simulation)
+        setInterval(() => {
+            // Simulate real-time currency updates
+            const amount = parseFloat(document.getElementById('currencyAmount').value) || 100;
+            if (amount > 0) {
+                convertCurrency();
+            }
+        }, 30000); // Update every 30 seconds
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Press 'S' to focus search
+            if (e.key.toLowerCase() === 's' && !e.ctrlKey && !e.metaKey) {
+                const searchInput = document.getElementById('searchInput');
+                if (document.activeElement !== searchInput) {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            }
+            
+            // Press 'Escape' to close modals
+            if (e.key === 'Escape') {
+                closeModal('destinationModal');
+                closeLightbox();
+            }
+        });
+
+        // Touch gestures for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                // Implement swipe navigation for gallery or destinations
+                if (document.querySelector('.lightbox.active')) {
+                    // Swipe through lightbox images
+                    if (diff > 0) {
+                        // Swipe left - next image
+                        console.log('Next image');
+                    } else {
+                        // Swipe right - previous image
+                        console.log('Previous image');
+                    }
+                }
+            }
+        }
+
+        // Performance optimization
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Debounced search
+        const debouncedSearch = debounce(performSearch, 300);
+
+        // Initialize location services
+        getUserLocation();
+
+        // Add some interactive micro-animations
+        function addMicroAnimations() {
+            // Pulse effect for CTA buttons
+            const ctaButtons = document.querySelectorAll('.btn-primary');
+            ctaButtons.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    btn.classList.add('pulse');
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.classList.remove('pulse');
+                });
+            });
+
+            // Floating animation for map pins
+            const mapPins = document.querySelectorAll('.map-pin');
+            mapPins.forEach((pin, index) => {
+                pin.style.animation = `pulse 2s infinite ${index * 0.2}s`;
+            });
+        }
+
+        // Initialize micro-animations after DOM load
+        setTimeout(addMicroAnimations, 1000);
+
+        // Social sharing functionality
+        function shareOnSocial(platform, destination) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`Check out this amazing destination: ${destination.name} - ${destination.description}`);
+            
+            const shareUrls = {
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+                twitter: `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
+                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+                whatsapp: `https://wa.me/?text=${text} ${url}`
+            };
+            
+            if (shareUrls[platform]) {
+                window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+            }
+        }
+
+        // Reviews and ratings system
+        function submitReview(destinationId, rating, comment) {
+            // Simulate review submission
+            const review = {
+                id: Date.now(),
+                destinationId,
+                rating,
+                comment,
+                author: 'Anonymous Traveler',
+                date: new Date().toLocaleDateString(),
+                helpful: 0
+            };
+            
+            console.log('Review submitted:', review);
+            alert('Thank you for your review! 🌟');
+        }
+
+        // Booking system mockup
+        function initializeBookingSystem() {
+            const bookingSteps = [
+                'Select dates',
+                'Choose accommodation',
+                'Add activities',
+                'Review booking',
+                'Payment',
+                'Confirmation'
+            ];
+            
+            window.currentBookingStep = 0;
+            window.bookingData = {};
+        }
+
+        function nextBookingStep() {
+            if (window.currentBookingStep < 5) {
+                window.currentBookingStep++;
+                updateBookingUI();
+            }
+        }
+
+        function updateBookingUI() {
+            // This would update the booking interface
+            console.log(`Booking step: ${window.currentBookingStep + 1}/6`);
+        }
+
+        // Initialize booking system
+        initializeBookingSystem();
+
+        // Add some CSS custom properties manipulation
+        function updateThemeColors() {
+            const root = document.documentElement;
+            const hour = new Date().getHours();
+            
+            // Dynamic color scheme based on time of day
+            if (hour >= 6 && hour < 12) {
+                // Morning - bright blues and greens
+                root.style.setProperty('--primary-blue', '#3b82f6');
+                root.style.setProperty('--primary-green', '#10b981');
+            } else if (hour >= 12 && hour < 18) {
+                // Afternoon - warmer tones
+                root.style.setProperty('--primary-blue', '#2563eb');
+                root.style.setProperty('--primary-orange', '#f97316');
+            } else {
+                // Evening/night - deeper colors
+                root.style.setProperty('--primary-blue', '#1e40af');
+                root.style.setProperty('--dark-slate', '#0f172a');
+            }
+        }
+
+        // Update theme on load and periodically
+        updateThemeColors();
+        setInterval(updateThemeColors, 3600000); // Update every hour
+
+        // Add some easter eggs
+        let clickCount = 0;
+        document.querySelector('.logo').addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 5) {
+                alert('🎉 Easter egg found! You\'re a true explorer!');
+                clickCount = 0;
+            }
+        });
+
+
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            console.log('Page load performance:', {
+                domContentLoaded: Math.round(perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart),
+                loadComplete: Math.round(perfData.loadEventEnd - perfData.loadEventStart),
+                totalTime: Math.round(perfData.loadEventEnd - perfData.navigationStart)
+            });
+        });
+    </script>
+</body>
+</html>

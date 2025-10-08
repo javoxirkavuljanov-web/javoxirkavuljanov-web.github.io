@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster Pro - Interactive Quiz Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 95%;
+            padding: 20px;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .screen {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 500px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Welcome Screen */
+        .welcome-content {
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            border-color: #FFD700;
+        }
+
+        .category-card.selected {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .difficulty-selector {
+            margin: 20px 0;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid #FFD700;
+            background: transparent;
+            color: #FFD700;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn:hover, .difficulty-btn.selected {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Quiz Screen */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .timer-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .timer-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#FFD700 0deg, rgba(255, 255, 255, 0.2) 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: background 0.1s ease;
+        }
+
+        .question-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .question-type {
+            font-size: 0.9rem;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .answer-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .answer-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #FFD700;
+        }
+
+        .answer-btn.correct {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: #4CAF50;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .answer-btn.incorrect {
+            background: rgba(244, 67, 54, 0.8);
+            border-color: #F44336;
+            animation: incorrectShake 0.6s ease;
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .lifelines {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .lifeline-btn {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: #FFD700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .lifeline-btn:hover:not(:disabled) {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .lifeline-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.1);
+            color: #999;
+        }
+
+        .next-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Results Screen */
+        .results-content {
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            color: #FFD700;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .grade-A { background: linear-gradient(45deg, #4CAF50, #45a049); }
+        .grade-B { background: linear-gradient(45deg, #2196F3, #1976D2); }
+        .grade-C { background: linear-gradient(45deg, #FF9800, #F57C00); }
+        .grade-D { background: linear-gradient(45deg, #F44336, #D32F2F); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: #FFD700;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .certificate {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .leaderboard-title {
+            text-align: center;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #FFD700;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                width: 98%;
+                padding: 10px;
+            }
+
+            .screen {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lifelines {
+                justify-content: center;
+            }
+
+            .score-display {
+                font-size: 2rem;
+            }
+        }
+
+        .rapid-fire-mode {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53) !important;
+        }
+
+        .rapid-fire-indicator {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <div class="logo">🏆 QuizMaster Pro</div>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen">
+            <div class="welcome-content">
+                <h1 class="welcome-title">Ready to Test Your Knowledge?</h1>
+                <p>Choose a category and difficulty level to begin your quiz adventure!</p>
+                
+                <div class="category-grid">
+                    <div class="category-card" data-category="science">
+                        <div class="category-icon">🧪</div>
+                        <h3>Science</h3>
+                    </div>
+                    <div class="category-card" data-category="history">
+                        <div class="category-icon">🏛️</div>
+                        <h3>History</h3>
+                    </div>
+                    <div class="category-card" data-category="sports">
+                        <div class="category-icon">⚽</div>
+                        <h3>Sports</h3>
+                    </div>
+                    <div class="category-card" data-category="tech">
+                        <div class="category-icon">💻</div>
+                        <h3>Technology</h3>
+                    </div>
+                </div>
+
+                <div class="difficulty-selector">
+                    <h3>Select Difficulty:</h3>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+                        <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                        <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                    </div>
+                </div>
+
+                <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="screen hidden">
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <div class="info-item">Question <span id="currentQ">1</span>/<span id="totalQ">10</span></div>
+                    <div class="info-item">Score: <span id="currentScore">0</span></div>
+                    <div class="info-item">Difficulty: <span id="currentDifficulty">Easy</span></div>
+                    <div class="info-item" id="categoryDisplay">Category: Science</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="timer-container">
+                <div class="timer-circle" id="timerCircle">30</div>
+                <div id="rapidFireIndicator" class="rapid-fire-indicator hidden">🔥 RAPID FIRE MODE 🔥</div>
+            </div>
+
+            <div class="lifelines">
+                <button class="lifeline-btn" id="fiftyFifty" onclick="useFiftyFifty()">50/50</button>
+                <button class="lifeline-btn" id="skipQuestion" onclick="skipQuestion()">Skip</button>
+                <button class="lifeline-btn" id="extraTime" onclick="addExtraTime()">+15s</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question-type" id="questionType">Multiple Choice</div>
+                <div class="question-text" id="questionText"></div>
+                <div class="answers-grid" id="answersGrid"></div>
+            </div>
+
+            <button class="next-btn hidden" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="screen hidden">
+            <div class="results-content">
+                <h1>Quiz Complete!</h1>
+                <div class="score-display" id="finalScore">0</div>
+                <div class="grade-badge" id="gradeBadge">Grade A</div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="correctAnswers">0</div>
+                        <div>Correct</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="accuracyPercent">0%</div>
+                        <div>Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgTime">0s</div>
+                        <div>Avg Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalTime">0s</div>
+                        <div>Total Time</div>
+                    </div>
+                </div>
+
+                <div id="certificateSection" class="certificate hidden">
+                    <h3>🏆 Achievement Unlocked! 🏆</h3>
+                    <p>Congratulations! You've earned a certificate for your excellent performance!</p>
+                </div>
+
+                <div class="leaderboard">
+                    <div class="leaderboard-title">🏆 Top Scores</div>
+                    <div id="leaderboardList"></div>
+                </div>
+
+                <div>
+                    <button class="restart-btn" onclick="restartQuiz()">Play Again</button>
+                    <button class="restart-btn" onclick="changeCategory()">Change Category</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            currentScreen: 'welcome',
+            selectedCategory: '',
+            selectedDifficulty: 'easy',
+            currentQuestion: 0,
+            score: 0,
+            correctAnswers: 0,
+            totalQuestions: 0,
+            timeLeft: 30,
+            timerInterval: null,
+            questions: [],
+            rapidFireMode: false,
+            startTime: null,
+            questionStartTime: null,
+            lifelines: {
+                fiftyFifty: true,
+                skip: true,
+                extraTime: true
+            },
+            questionTimes: [],
+            multiplier: 1
+        };
+
+        // Question Database
+        const questionBank = {
+            science: {
+                easy: [
+                    { q: "What is the chemical symbol for water?", a: ["H2O", "CO2", "NaCl", "CH4"], correct: 0, type: "multiple" },
+                    { q: "How many bones are in the adult human body?", a: ["206", "208", "204", "210"], correct: 0, type: "multiple" },
+                    { q: "The Earth revolves around the Sun.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What gas do plants absorb from the atmosphere?", a: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], correct: 0, type: "multiple" },
+                    { q: "Lightning is hotter than the surface of the Sun.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the largest organ in the human body?", a: ["Skin", "Liver", "Heart", "Brain"], correct: 0, type: "multiple" },
+                    { q: "Sound travels faster in water than in air.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the hardest natural substance on Earth?", a: ["Diamond", "Gold", "Iron", "Quartz"], correct: 0, type: "multiple" },
+                    { q: "The human heart has four chambers.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What planet is known as the Red Planet?", a: ["Mars", "Venus", "Jupiter", "Saturn"], correct: 0, type: "multiple" }
+                ],
+                medium: [
+                    { q: "What is the powerhouse of the cell?", a: ["Mitochondria", "Nucleus", "Ribosome", "Lysosome"], correct: 0, type: "multiple" },
+                    { q: "What is the speed of light in vacuum?", a: ["299,792,458 m/s", "300,000,000 m/s", "299,000,000 m/s", "298,000,000 m/s"], correct: 0, type: "multiple" },
+                    { q: "DNA stands for Deoxyribonucleic Acid.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the atomic number of carbon?", a: ["6", "12", "8", "14"], correct: 0, type: "multiple" },
+                    { q: "Electrons have a negative charge.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the most abundant gas in Earth's atmosphere?", a: ["Nitrogen", "Oxygen", "Carbon Dioxide", "Argon"], correct: 0, type: "multiple" },
+                    { q: "Photosynthesis occurs in the chloroplasts.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the pH of pure water?", a: ["7", "0", "14", "1"], correct: 0, type: "multiple" },
+                    { q: "Gravity on the Moon is about 1/6th of Earth's gravity.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What particle is responsible for electromagnetic force?", a: ["Photon", "Electron", "Proton", "Neutron"], correct: 0, type: "multiple" }
+                ],
+                hard: [
+                    { q: "What is Avogadro's number?", a: ["6.022 × 10²³", "6.626 × 10³⁴", "3.14159", "2.718"], correct: 0, type: "multiple" },
+                    { q: "What is the second law of thermodynamics about?", a: ["Entropy", "Energy", "Mass", "Time"], correct: 0, type: "multiple" },
+                    { q: "Schrödinger's equation describes quantum mechanics.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the half-life of Carbon-14?", a: ["5,730 years", "1,600 years", "10,000 years", "50,000 years"], correct: 0, type: "multiple" },
+                    { q: "The uncertainty principle was formulated by Heisenberg.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the strongest intermolecular force?", a: ["Hydrogen bonding", "Van der Waals", "Dipole-dipole", "London dispersion"], correct: 0, type: "multiple" },
+                    { q: "Black holes have an event horizon.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the Planck constant approximately?", a: ["6.626 × 10⁻³⁴ J·s", "3.14159", "2.718", "9.81 m/s²"], correct: 0, type: "multiple" },
+                    { q: "Dark matter makes up about 27% of the universe.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the strongest fundamental force?", a: ["Strong nuclear", "Electromagnetic", "Weak nuclear", "Gravitational"], correct: 0, type: "multiple" }
+                ]
+            },
+            history: {
+                easy: [
+                    { q: "Who was the first President of the United States?", a: ["George Washington", "Thomas Jefferson", "John Adams", "Benjamin Franklin"], correct: 0, type: "multiple" },
+                    { q: "World War II ended in 1945.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Which ancient wonder was located in Alexandria?", a: ["Lighthouse", "Hanging Gardens", "Colossus", "Mausoleum"], correct: 0, type: "multiple" },
+                    { q: "The Titanic sank in 1912.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Who painted the ceiling of the Sistine Chapel?", a: ["Michelangelo", "Leonardo da Vinci", "Raphael", "Donatello"], correct: 0, type: "multiple" },
+                    { q: "The Berlin Wall fell in 1989.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Which empire was ruled by Julius Caesar?", a: ["Roman Empire", "Greek Empire", "Egyptian Empire", "Persian Empire"], correct: 0, type: "multiple" },
+                    { q: "Christopher Columbus reached America in 1492.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What year did the American Civil War begin?", a: ["1861", "1865", "1859", "1863"], correct: 0, type: "multiple" },
+                    { q: "The Great Wall of China was built to keep out invaders.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ],
+                medium: [
+                    { q: "Who was known as the 'Iron Lady'?", a: ["Margaret Thatcher", "Queen Elizabeth II", "Indira Gandhi", "Golda Meir"], correct: 0, type: "multiple" },
+                    { q: "The French Revolution began in 1789.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Which battle ended Napoleon's rule as Emperor?", a: ["Waterloo", "Austerlitz", "Leipzig", "Borodino"], correct: 0, type: "multiple" },
+                    { q: "The Renaissance began in Italy.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Who wrote 'The Communist Manifesto'?", a: ["Karl Marx", "Vladimir Lenin", "Friedrich Engels", "Leon Trotsky"], correct: 0, type: "multiple" },
+                    { q: "The Black Death occurred in the 14th century.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Which ancient civilization built Machu Picchu?", a: ["Inca", "Aztec", "Maya", "Olmec"], correct: 0, type: "multiple" },
+                    { q: "The Cold War lasted from 1947 to 1991.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Who was the first man to walk on the moon?", a: ["Neil Armstrong", "Buzz Aldrin", "John Glenn", "Alan Shepard"], correct: 0, type: "multiple" },
+                    { q: "The Printing Press was invented by Johannes Gutenberg.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ],
+                hard: [
+                    { q: "What year did the Treaty of Versailles end?", a: ["1919", "1918", "1920", "1921"], correct: 0, type: "multiple" },
+                    { q: "The Byzantine Empire was the eastern continuation of the Roman Empire.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Who was the first female pharaoh of Egypt?", a: ["Hatshepsut", "Cleopatra", "Nefertiti", "Ankhesenamun"], correct: 0, type: "multiple" },
+                    { q: "The Thirty Years' War was primarily a religious conflict.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Which dynasty unified China for the first time?", a: ["Qin", "Han", "Tang", "Song"], correct: 0, type: "multiple" },
+                    { q: "The Council of Nicaea was held in 325 AD.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "Who founded the Mongol Empire?", a: ["Genghis Khan", "Kublai Khan", "Ögedei Khan", "Möngke Khan"], correct: 0, type: "multiple" },
+                    { q: "The Peloponnesian War was fought between Athens and Sparta.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What was the capital of the Aztec Empire?", a: ["Tenochtitlan", "Cusco", "Chichen Itza", "Tikal"], correct: 0, type: "multiple" },
+                    { q: "The Silk Road connected China to Europe.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ]
+            },
+            sports: {
+                easy: [
+                    { q: "How many players are on a basketball team on the court?", a: ["5", "6", "7", "8"], correct: 0, type: "multiple" },
+                    { q: "The Olympics are held every 4 years.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What sport is played at Wimbledon?", a: ["Tennis", "Golf", "Cricket", "Rugby"], correct: 0, type: "multiple" },
+                    { q: "A football field is 100 yards long.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "How many holes are played in a standard game of golf?", a: ["18", "16", "20", "24"], correct: 0, type: "multiple" },
+                    { q: "Soccer is called football in most countries.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the maximum score in ten-pin bowling?", a: ["300", "250", "350", "200"], correct: 0, type: "multiple" },
+                    { q: "The Super Bowl is the championship game of the NFL.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "How many innings are in a standard baseball game?", a: ["9", "7", "8", "10"], correct: 0, type: "multiple" },
+                    { q: "Ice hockey is played with a puck.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ],
+                medium: [
+                    { q: "Who has won the most Grand Slam tennis titles?", a: ["Novak Djokovic", "Rafael Nadal", "Roger Federer", "Pete Sampras"], correct: 0, type: "multiple" },
+                    { q: "The World Cup is held every four years.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the diameter of a basketball hoop?", a: ["18 inches", "16 inches", "20 inches", "24 inches"], correct: 0, type: "multiple" },
+                    { q: "Formula 1 races are called Grand Prix.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "How many majors are there in professional golf?", a: ["4", "5", "3", "6"], correct: 0, type: "multiple" },
+                    { q: "The Tour de France is a cycling race.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the longest distance in Olympic swimming?", a: ["1500m", "800m", "1000m", "2000m"], correct: 0, type: "multiple" },
+                    { q: "Muhammad Ali was originally named Cassius Clay.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "How many players are on a volleyball team?", a: ["6", "5", "7", "8"], correct: 0, type: "multiple" },
+                    { q: "The Masters Tournament is held in Augusta, Georgia.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ],
+                hard: [
+                    { q: "Who holds the record for most home runs in a single MLB season?", a: ["Barry Bonds", "Mark McGwire", "Babe Ruth", "Hank Aaron"], correct: 0, type: "multiple" },
+                    { q: "The Heisman Trophy is awarded to the best college football player.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the fastest recorded pitch in MLB history?", a: ["105.1 mph", "104.8 mph", "106.0 mph", "103.9 mph"], correct: 0, type: "multiple" },
+                    { q: "Pelé scored over 1000 career goals.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "How many teams compete in the UEFA Champions League group stage?", a: ["32", "24", "16", "48"], correct: 0, type: "multiple" },
+                    { q: "The Stanley Cup is the oldest trophy in North American sports.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the record for most points in a single NBA game?", a: ["100", "81", "73", "69"], correct: 0, type: "multiple" },
+                    { q: "Tiger Woods has won the Masters Tournament 5 times.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "How many rounds are in a professional boxing match?", a: ["12", "10", "15", "8"], correct: 0, type: "multiple" },
+                    { q: "The Boston Marathon is always held on Patriots' Day.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ]
+            },
+            tech: {
+                easy: [
+                    { q: "What does CPU stand for?", a: ["Central Processing Unit", "Computer Processing Unit", "Central Program Unit", "Computer Program Unit"], correct: 0, type: "multiple" },
+                    { q: "The Internet was invented in the 1990s.", a: ["True", "False"], correct: 1, type: "truefalse" },
+                    { q: "What does WWW stand for?", a: ["World Wide Web", "World Web Wide", "Wide World Web", "Web World Wide"], correct: 0, type: "multiple" },
+                    { q: "USB stands for Universal Serial Bus.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What company created the iPhone?", a: ["Apple", "Samsung", "Google", "Microsoft"], correct: 0, type: "multiple" },
+                    { q: "HTML is a programming language.", a: ["True", "False"], correct: 1, type: "truefalse" },
+                    { q: "What does RAM stand for?", a: ["Random Access Memory", "Read Access Memory", "Rapid Access Memory", "Real Access Memory"], correct: 0, type: "multiple" },
+                    { q: "Google was founded in 1998.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the most popular operating system for smartphones?", a: ["Android", "iOS", "Windows", "Linux"], correct: 0, type: "multiple" },
+                    { q: "WiFi stands for Wireless Fidelity.", a: ["True", "False"], correct: 1, type: "truefalse" }
+                ],
+                medium: [
+                    { q: "Who founded Microsoft?", a: ["Bill Gates", "Steve Jobs", "Mark Zuckerberg", "Larry Page"], correct: 0, type: "multiple" },
+                    { q: "JavaScript and Java are the same language.", a: ["True", "False"], correct: 1, type: "truefalse" },
+                    { q: "What does SQL stand for?", a: ["Structured Query Language", "Simple Query Language", "Standard Query Language", "System Query Language"], correct: 0, type: "multiple" },
+                    { q: "The first computer virus was created in 1986.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the binary equivalent of decimal 8?", a: ["1000", "1001", "0111", "1010"], correct: 0, type: "multiple" },
+                    { q: "Python is named after the snake.", a: ["True", "False"], correct: 1, type: "truefalse" },
+                    { q: "What does API stand for?", a: ["Application Programming Interface", "Automated Program Interface", "Application Program Integration", "Automated Programming Integration"], correct: 0, type: "multiple" },
+                    { q: "The first iPhone was released in 2007.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the maximum capacity of a standard Blu-ray disc?", a: ["25 GB", "50 GB", "4.7 GB", "8.5 GB"], correct: 0, type: "multiple" },
+                    { q: "Linux is open-source software.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ],
+                hard: [
+                    { q: "What is the time complexity of bubble sort?", a: ["O(n²)", "O(n log n)", "O(n)", "O(log n)"], correct: 0, type: "multiple" },
+                    { q: "TCP/IP was developed by DARPA.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the latest version of HTTP?", a: ["HTTP/3", "HTTP/2", "HTTP/1.1", "HTTP/4"], correct: 0, type: "multiple" },
+                    { q: "Moore's Law states that transistor density doubles every 18 months.", a: ["True", "False"], correct: 1, type: "truefalse" },
+                    { q: "What does REST stand for in web services?", a: ["Representational State Transfer", "Remote State Transfer", "Representational System Transfer", "Remote System Transfer"], correct: 0, type: "multiple" },
+                    { q: "IPv6 uses 128-bit addresses.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What is the maximum theoretical speed of USB 3.0?", a: ["5 Gbps", "10 Gbps", "480 Mbps", "12 Mbps"], correct: 0, type: "multiple" },
+                    { q: "The first web browser was called WorldWideWeb.", a: ["True", "False"], correct: 0, type: "truefalse" },
+                    { q: "What does CRUD stand for in database operations?", a: ["Create, Read, Update, Delete", "Create, Retrieve, Update, Delete", "Copy, Read, Update, Delete", "Create, Read, Upload, Delete"], correct: 0, type: "multiple" },
+                    { q: "Quantum computers use qubits instead of bits.", a: ["True", "False"], correct: 0, type: "truefalse" }
+                ]
+            }
+        };
+
+        // Initialize game
+        function initGame() {
+            setupEventListeners();
+            loadLeaderboard();
+        }
+
+        function setupEventListeners() {
+            // Category selection
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    gameState.selectedCategory = card.dataset.category;
+                });
+            });
+
+            // Difficulty selection
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    gameState.selectedDifficulty = btn.dataset.difficulty;
+                });
+            });
+
+            // Set defaults
+            document.querySelector('[data-category="science"]').classList.add('selected');
+            document.querySelector('[data-difficulty="easy"]').classList.add('selected');
+            gameState.selectedCategory = 'science';
+            gameState.selectedDifficulty = 'easy';
+        }
+
+        function startQuiz() {
+            if (!gameState.selectedCategory || !gameState.selectedDifficulty) {
+                alert('Please select a category and difficulty level!');
+                return;
+            }
+
+            // Reset game state
+            gameState.currentQuestion = 0;
+            gameState.score = 0;
+            gameState.correctAnswers = 0;
+            gameState.startTime = Date.now();
+            gameState.questionTimes = [];
+            gameState.rapidFireMode = false;
+            gameState.lifelines = { fiftyFifty: true, skip: true, extraTime: true };
+
+            // Prepare questions
+            const categoryQuestions = questionBank[gameState.selectedCategory][gameState.selectedDifficulty];
+            gameState.questions = shuffleArray([...categoryQuestions]).slice(0, 10);
+            gameState.totalQuestions = gameState.questions.length;
+
+            // Switch to quiz screen
+            switchScreen('quiz');
+            updateQuizDisplay();
+            loadQuestion();
+        }
+
+        function switchScreen(screenName) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+            document.getElementById(screenName + 'Screen').classList.remove('hidden');
+            gameState.currentScreen = screenName;
+        }
+
+        function updateQuizDisplay() {
+            document.getElementById('currentQ').textContent = gameState.currentQuestion + 1;
+            document.getElementById('totalQ').textContent = gameState.totalQuestions;
+            document.getElementById('currentScore').textContent = gameState.score;
+            document.getElementById('currentDifficulty').textContent = capitalize(gameState.selectedDifficulty);
+            document.getElementById('categoryDisplay').textContent = `Category: ${capitalize(gameState.selectedCategory)}`;
+            
+            // Update progress bar
+            const progress = ((gameState.currentQuestion) / gameState.totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Check for rapid fire mode (after question 7)
+            if (gameState.currentQuestion >= 7) {
+                gameState.rapidFireMode = true;
+                document.getElementById('rapidFireIndicator').classList.remove('hidden');
+                document.querySelector('.screen').classList.add('rapid-fire-mode');
+            }
+        }
+
+        function loadQuestion() {
+            if (gameState.currentQuestion >= gameState.totalQuestions) {
+                endQuiz();
+                return;
+            }
+
+            const question = gameState.questions[gameState.currentQuestion];
+            gameState.questionStartTime = Date.now();
+
+            // Update question display
+            document.getElementById('questionType').textContent = 
+                question.type === 'multiple' ? 'Multiple Choice' : 'True/False';
+            document.getElementById('questionText').textContent = question.q;
+
+            // Create answer buttons
+            const answersGrid = document.getElementById('answersGrid');
+            answersGrid.innerHTML = '';
+
+            question.a.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
+                button.onclick = () => selectAnswer(index);
+                answersGrid.appendChild(button);
+            });
+
+            // Reset timer
+            gameState.timeLeft = gameState.rapidFireMode ? 15 : 30;
+            updateTimer();
+            startTimer();
+
+            // Hide next button
+            document.getElementById('nextBtn').classList.add('hidden');
+        }
+
+        function startTimer() {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = setInterval(() => {
+                gameState.timeLeft--;
+                updateTimer();
+
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timerInterval);
+                    selectAnswer(-1); // Time out
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const timerCircle = document.getElementById('timerCircle');
+            timerCircle.textContent = gameState.timeLeft;
+            
+            const maxTime = gameState.rapidFireMode ? 15 : 30;
+            const percentage = (gameState.timeLeft / maxTime) * 360;
+            
+            if (gameState.timeLeft <= 5) {
+                timerCircle.style.background = `conic-gradient(#FF6B6B ${percentage}deg, rgba(255, 255, 255, 0.2) ${percentage}deg)`;
+            } else {
+                timerCircle.style.background = `conic-gradient(#FFD700 ${percentage}deg, rgba(255, 255, 255, 0.2) ${percentage}deg)`;
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            clearInterval(gameState.timerInterval);
+            
+            const question = gameState.questions[gameState.currentQuestion];
+            const answerButtons = document.querySelectorAll('.answer-btn');
+            const isCorrect = selectedIndex === question.correct;
+            const timeTaken = Date.now() - gameState.questionStartTime;
+
+            // Disable all buttons
+            answerButtons.forEach(btn => btn.disabled = true);
+
+            // Show correct/incorrect feedback
+            answerButtons.forEach((btn, index) => {
+                if (index === question.correct) {
+                    btn.classList.add('correct');
+                } else if (index === selectedIndex && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Calculate score
+            if (isCorrect) {
+                gameState.correctAnswers++;
+                let points = 100;
+                
+                // Time bonus
+                const timeBonus = Math.max(0, gameState.timeLeft * 2);
+                points += timeBonus;
+
+                // Difficulty multiplier
+                const difficultyMultipliers = { easy: 1, medium: 1.5, hard: 2 };
+                points *= difficultyMultipliers[gameState.selectedDifficulty];
+
+                // Rapid fire bonus
+                if (gameState.rapidFireMode) {
+                    points *= 1.5;
+                }
+
+                gameState.score += Math.round(points);
+            }
+
+            // Record time taken
+            gameState.questionTimes.push(timeTaken / 1000);
+
+            // Update display
+            document.getElementById('currentScore').textContent = gameState.score;
+
+            // Show next button after delay
+            setTimeout(() => {
+                document.getElementById('nextBtn').classList.remove('hidden');
+            }, 1500);
+        }
+
+        function nextQuestion() {
+            gameState.currentQuestion++;
+            updateQuizDisplay();
+            loadQuestion();
+        }
+
+        // Lifeline functions
+        function useFiftyFifty() {
+            if (!gameState.lifelines.fiftyFifty) return;
+            
+            gameState.lifelines.fiftyFifty = false;
+            document.getElementById('fiftyFifty').disabled = true;
+            
+            const question = gameState.questions[gameState.currentQuestion];
+            const answerButtons = document.querySelectorAll('.answer-btn');
+            
+            // Remove two incorrect answers
+            let removed = 0;
+            answerButtons.forEach((btn, index) => {
+                if (index !== question.correct && removed < 2) {
+                    btn.style.opacity = '0.3';
+                    btn.disabled = true;
+                    removed++;
+                }
+            });
+        }
+
+        function skipQuestion() {
+            if (!gameState.lifelines.skip) return;
+            
+            gameState.lifelines.skip = false;
+            document.getElementById('skipQuestion').disabled = true;
+            
+            // Move to next question without penalty
+            gameState.currentQuestion++;
+            updateQuizDisplay();
+            loadQuestion();
+        }
+
+        function addExtraTime() {
+            if (!gameState.lifelines.extraTime) return;
+            
+            gameState.lifelines.extraTime = false;
+            document.getElementById('extraTime').disabled = true;
+            
+            gameState.timeLeft += 15;
+            updateTimer();
+        }
+
+        function endQuiz() {
+            clearInterval(gameState.timerInterval);
+            
+            const totalTime = (Date.now() - gameState.startTime) / 1000;
+            const accuracy = (gameState.correctAnswers / gameState.totalQuestions) * 100;
+            const avgTime = gameState.questionTimes.reduce((a, b) => a + b, 0) / gameState.questionTimes.length;
+
+            // Calculate grade
+            let grade, gradeClass;
+            if (accuracy >= 90) { grade = 'A'; gradeClass = 'grade-A'; }
+            else if (accuracy >= 80) { grade = 'B'; gradeClass = 'grade-B'; }
+            else if (accuracy >= 70) { grade = 'C'; gradeClass = 'grade-C'; }
+            else { grade = 'D'; gradeClass = 'grade-D'; }
+
+            // Update results display
+            document.getElementById('finalScore').textContent = gameState.score;
+            document.getElementById('correctAnswers').textContent = gameState.correctAnswers;
+            document.getElementById('accuracyPercent').textContent = accuracy.toFixed(1) + '%';
+            document.getElementById('avgTime').textContent = avgTime.toFixed(1) + 's';
+            document.getElementById('totalTime').textContent = Math.round(totalTime) + 's';
+            
+            const gradeBadge = document.getElementById('gradeBadge');
+            gradeBadge.textContent = `Grade ${grade}`;
+            gradeBadge.className = `grade-badge ${gradeClass}`;
+
+            // Show certificate for high scores
+            if (accuracy >= 80) {
+                document.getElementById('certificateSection').classList.remove('hidden');
+            }
+
+            // Save score and update leaderboard
+            saveScore({
+                score: gameState.score,
+                accuracy: accuracy,
+                category: gameState.selectedCategory,
+                difficulty: gameState.selectedDifficulty,
+                date: new Date().toLocaleDateString()
+            });
+
+            updateLeaderboardDisplay();
+            switchScreen('results');
+        }
+
+        function saveScore(scoreData) {
+            let scores = JSON.parse(localStorage.getItem('quizScores') || '[]');
+            scores.push(scoreData);
+            scores.sort((a, b) => b.score - a.score);
+            scores = scores.slice(0, 10); // Keep top 10
+            localStorage.setItem('quizScores', JSON.stringify(scores));
+        }
+
+        function loadLeaderboard() {
+            return JSON.parse(localStorage.getItem('quizScores') || '[]');
+        }
+
+        function updateLeaderboardDisplay() {
+            const scores = loadLeaderboard();
+            const leaderboardList = document.getElementById('leaderboardList');
+            
+            if (scores.length === 0) {
+                leaderboardList.innerHTML = '<div class="leaderboard-entry">No scores yet!</div>';
+                return;
+            }
+
+            leaderboardList.innerHTML = scores.map((score, index) => `
+                <div class="leaderboard-entry">
+                    <span class="rank">#${index + 1}</span>
+                    <span>${capitalize(score.category)} - ${capitalize(score.difficulty)}</span>
+                    <span>${score.score} pts (${score.accuracy.toFixed(1)}%)</span>
+                </div>
+            `).join('');
+        }
+
+        function restartQuiz() {
+            switchScreen('welcome');
+        }
+
+        function changeCategory() {
+            switchScreen('welcome');
+        }
+
+        // Utility functions
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

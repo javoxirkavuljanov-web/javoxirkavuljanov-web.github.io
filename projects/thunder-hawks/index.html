@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thunder Hawks - Official Team Website</title>
+    <meta name="description" content="Official website of Thunder Hawks - Your premier sports team">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="team-logo">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h2>THUNDER HAWKS</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-logo">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <span class="brand-text">THUNDER HAWKS</span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#roster" class="nav-link">Roster</a></li>
+                <li><a href="#schedule" class="nav-link">Schedule</a></li>
+                <li><a href="#stats" class="nav-link">Stats</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#news" class="nav-link">News</a></li>
+                <li><a href="#store" class="nav-link">Store</a></li>
+                <li><a href="#fanzone" class="nav-link">Fan Zone</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="ticket-btn" onclick="openTicketModal()">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </button>
+                <button class="mobile-toggle" id="mobile-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-video-overlay"></div>
+            <div class="hero-particles"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>2024 CHAMPIONS</span>
+            </div>
+            
+            <h1 class="hero-title">
+                <span class="title-line">THUNDER</span>
+                <span class="title-line">HAWKS</span>
+            </h1>
+            
+            <p class="hero-subtitle">Unleashing the Storm on the Field</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="15">0</span>
+                    <span class="stat-label">Wins</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="3">0</span>
+                    <span class="stat-label">Losses</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="1">0</span>
+                    <span class="stat-label">Championship</span>
+                </div>
+            </div>
+            
+            <div class="hero-actions">
+                <button class="btn btn-primary" onclick="scrollToSection('schedule')">
+                    <i class="fas fa-calendar"></i>
+                    Next Game
+                </button>
+                <button class="btn btn-outline" onclick="openHighlightsModal()">
+                    <i class="fas fa-play"></i>
+                    Watch Highlights
+                </button>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Live Score Banner -->
+    <div class="live-score-banner" id="live-score">
+        <div class="live-indicator">
+            <span class="live-dot"></span>
+            LIVE
+        </div>
+        <div class="score-content">
+            <div class="team home-team">
+                <span class="team-name">THUNDER HAWKS</span>
+                <span class="team-score" id="home-score">2</span>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team away-team">
+                <span class="team-name">STORM EAGLES</span>
+                <span class="team-score" id="away-score">1</span>
+            </div>
+        </div>
+        <div class="game-time">
+            <span id="game-time">78:45</span>
+        </div>
+    </div>
+
+    <!-- Team Roster Section -->
+    <section id="roster" class="section roster-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Team Roster</h2>
+                <p class="section-subtitle">Meet the Thunder Hawks Squad</p>
+            </div>
+            
+            <div class="roster-filters">
+                <button class="filter-btn active" data-position="all">All Players</button>
+                <button class="filter-btn" data-position="forward">Forwards</button>
+                <button class="filter-btn" data-position="midfielder">Midfielders</button>
+                <button class="filter-btn" data-position="defender">Defenders</button>
+                <button class="filter-btn" data-position="goalkeeper">Goalkeepers</button>
+            </div>
+            
+            <div class="roster-grid" id="roster-grid">
+                <!-- Players will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="section schedule-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Game Schedule</h2>
+                <p class="section-subtitle">Upcoming matches and results</p>
+            </div>
+            
+            <div class="schedule-tabs">
+                <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+                <button class="tab-btn" data-tab="results">Results</button>
+            </div>
+            
+            <div class="schedule-content">
+                <div class="tab-content active" id="upcoming">
+                    <div class="games-list" id="upcoming-games">
+                        <!-- Games will be dynamically loaded -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="results">
+                    <div class="games-list" id="past-games">
+                        <!-- Results will be dynamically loaded -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="stats" class="section stats-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Team Statistics</h2>
+                <p class="section-subtitle">Season performance overview</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">83%</span>
+                        <span class="stat-name">Win Rate</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">45</span>
+                        <span class="stat-name">Goals Scored</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">12</span>
+                        <span class="stat-name">Clean Sheets</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">25K</span>
+                        <span class="stat-name">Avg Attendance</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="performance-chart">
+                <h3>Season Performance</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Photo Gallery</h2>
+                <p class="section-subtitle">Capturing the Thunder Hawks in action</p>
+            </div>
+            
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-category="all">All Photos</button>
+                <button class="filter-btn" data-category="games">Game Action</button>
+                <button class="filter-btn" data-category="training">Training</button>
+                <button class="filter-btn" data-category="celebrations">Celebrations</button>
+            </div>
+            
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Photos will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="section news-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest News</h2>
+                <p class="section-subtitle">Stay updated with Thunder Hawks</p>
+            </div>
+            
+            <div class="news-grid" id="news-grid">
+                <!-- News articles will be dynamically loaded -->
+            </div>
+            
+            <div class="newsletter-signup">
+                <div class="newsletter-content">
+                    <h3>Stay in the Loop</h3>
+                    <p>Get the latest Thunder Hawks news delivered to your inbox</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Section -->
+    <section id="store" class="section store-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Team Store</h2>
+                <p class="section-subtitle">Show your Thunder Hawks pride</p>
+            </div>
+            
+            <div class="store-categories">
+                <button class="category-btn active" data-category="all">All Items</button>
+                <button class="category-btn" data-category="jerseys">Jerseys</button>
+                <button class="category-btn" data-category="accessories">Accessories</button>
+                <button class="category-btn" data-category="collectibles">Collectibles</button>
+            </div>
+            
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Fan Zone Section -->
+    <section id="fanzone" class="section fanzone-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Fan Zone</h2>
+                <p class="section-subtitle">Interactive experiences for Thunder Hawks fans</p>
+            </div>
+            
+            <div class="fanzone-grid">
+                <div class="fanzone-card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Fantasy Team Builder</h3>
+                    <p>Create your dream Thunder Hawks lineup</p>
+                    <button class="btn btn-primary" onclick="openFantasyBuilder()">Build Team</button>
+                </div>
+                
+                <div class="fanzone-card">
+                    <div class="card-icon">
+                        <i class="fas fa-poll"></i>
+                    </div>
+                    <h3>Fan Polls</h3>
+                    <p>Vote on team decisions and predictions</p>
+                    <button class="btn btn-primary" onclick="openPolls()">Vote Now</button>
+                </div>
+                
+                <div class="fanzone-card">
+                    <div class="card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Trivia Challenge</h3>
+                    <p>Test your Thunder Hawks knowledge</p>
+                    <button class="btn btn-primary" onclick="startTrivia()">Start Quiz</button>
+                </div>
+                
+                <div class="fanzone-card">
+                    <div class="card-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Social Hub</h3>
+                    <p>Connect with fellow fans</p>
+                    <button class="btn btn-primary" onclick="openSocialHub()">Join Community</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-bolt"></i>
+                        <span>THUNDER HAWKS</span>
+                    </div>
+                    <p>Unleashing the storm on the field since 2010. Join the Thunder Hawks family and experience the thrill of victory.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#roster">Team Roster</a></li>
+                        <li><a href="#schedule">Schedule</a></li>
+                        <li><a href="#stats">Statistics</a></li>
+                        <li><a href="#news">News</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Fan Zone</h4>
+                    <ul>
+                        <li><a href="#store">Team Store</a></li>
+                        <li><a href="#fanzone">Interactive Games</a></li>
+                        <li><a href="#">Season Tickets</a></li>
+                        <li><a href="#">Fan Club</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Thunder Stadium, Sports City</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@thunderhawks.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Thunder Hawks. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Player Profile Modal -->
+    <div id="player-modal" class="modal">
+        <div class="modal-content player-modal-content">
+            <span class="close" onclick="closeModal('player-modal')">&times;</span>
+            <div class="player-profile" id="player-profile">
+                <!-- Player details will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Highlights Modal -->
+    <div id="highlights-modal" class="modal">
+        <div class="modal-content video-modal-content">
+            <span class="close" onclick="closeModal('highlights-modal')">&times;</span>
+            <div class="video-container">
+                <video id="highlights-video" controls>
+                    <source src="highlights.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Booking Modal -->
+    <div id="ticket-modal" class="modal">
+        <div class="modal-content ticket-modal-content">
+            <span class="close" onclick="closeModal('ticket-modal')">&times;</span>
+            <div class="ticket-booking" id="ticket-booking">
+                <h2>Book Your Tickets</h2>
+                <form class="ticket-form">
+                    <div class="form-group">
+                        <label>Select Game</label>
+                        <select required>
+                            <option value="">Choose a game</option>
+                            <option value="game1">vs Storm Eagles - Dec 15</option>
+                            <option value="game2">vs Lightning Bolts - Dec 22</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ticket Type</label>
+                        <select required>
+                            <option value="">Select ticket type</option>
+                            <option value="general">General Admission - $25</option>
+                            <option value="premium">Premium Seats - $50</option>
+                            <option value="vip">VIP Experience - $100</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Tickets</label>
+                        <input type="number" min="1" max="10" value="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Book Tickets</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fantasy Team Builder Modal -->
+    <div id="fantasy-modal" class="modal">
+        <div class="modal-content fantasy-modal-content">
+            <span class="close" onclick="closeModal('fantasy-modal')">&times;</span>
+            <div class="fantasy-builder" id="fantasy-builder">
+                <h2>Fantasy Team Builder</h2>
+                <div class="fantasy-field">
+                    <div class="field-positions">
+                        <div class="position goalkeeper" data-position="gk">
+                            <div class="position-label">GK</div>
+                            <div class="player-slot" data-slot="gk"></div>
+                        </div>
+                        <div class="position defenders" data-position="def">
+                            <div class="position-label">DEF</div>
+                            <div class="player-slot" data-slot="def1"></div>
+                            <div class="player-slot" data-slot="def2"></div>
+                            <div class="player-slot" data-slot="def3"></div>
+                            <div class="player-slot" data-slot="def4"></div>
+                        </div>
+                        <div class="position midfielders" data-position="mid">
+                            <div class="position-label">MID</div>
+                            <div class="player-slot" data-slot="mid1"></div>
+                            <div class="player-slot" data-slot="mid2"></div>
+                            <div class="player-slot" data-slot="mid3"></div>
+                        </div>
+                        <div class="position forwards" data-position="fwd">
+                            <div class="position-label">FWD</div>
+                            <div class="player-slot" data-slot="fwd1"></div>
+                            <div class="player-slot" data-slot="fwd2"></div>
+                            <div class="player-slot" data-slot="fwd3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="player-selection">
+                    <h3>Available Players</h3>
+                    <div class="available-players" id="available-players">
+                        <!-- Available players will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
